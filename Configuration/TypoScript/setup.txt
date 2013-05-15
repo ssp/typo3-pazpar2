@@ -31,6 +31,7 @@ plugin.tx_pazpar2 {
 		useMaps = 1
 		useZDB = 1
 		ZDBIP = 0
+		useAutocomplete = 0
 
 		# only settable via TypoScript
 		siteName =
