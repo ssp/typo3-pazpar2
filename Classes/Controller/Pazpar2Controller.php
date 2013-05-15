@@ -221,9 +221,11 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 		}
 
 		$jsCommand .= "\n";
-		$jsCommand .= "pp2_autocomplete_init_wrapper();\n";
-		$jsCommand .= "pp2_autocomplete_init_wrapper('input#pz2-field-title', 'title');\n";
-		$jsCommand .= "pp2_autocomplete_init_wrapper('input#pz2-field-person', 'author');\n";
+		if ( $this->conf['useAutocomplete']) {
+			$jsCommand .= "pp2_autocomplete_init_wrapper();\n";
+			$jsCommand .= "pp2_autocomplete_init_wrapper('input#pz2-field-title', 'title');\n";
+			$jsCommand .= "pp2_autocomplete_init_wrapper('input#pz2-field-person', 'author');\n";
+		}
 
 		// Add the JavaScript setup commands to <head>.
 		$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
