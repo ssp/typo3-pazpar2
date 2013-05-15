@@ -221,7 +221,7 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 		}
 
 		$jsCommand .= "\n";
-		if ( $this->conf['useAutocomplete']) {
+		if ( $this->conf['useAutocomplete'] > 0 ) {
 			$jsCommand .= "pp2_autocomplete_init_wrapper();\n";
 			$jsCommand .= "pp2_autocomplete_init_wrapper('input#pz2-field-title', 'title');\n";
 			$jsCommand .= "pp2_autocomplete_init_wrapper('input#pz2-field-person', 'author');\n";
