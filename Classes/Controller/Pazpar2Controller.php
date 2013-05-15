@@ -152,6 +152,12 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 		$scriptTag->forceClosingTag(true);
 		$this->response->addAdditionalHeaderData( $scriptTag->render() );
 
+		$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
+		$scriptTag->addAttribute('type', 'text/javascript');
+		$scriptTag->addAttribute('src',  $this->conf['mk2JSPath']);
+		$scriptTag->forceClosingTag(true);
+		$this->response->addAdditionalHeaderData( $scriptTag->render() );
+
 		// Set up the service name.
 		$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
 		$scriptTag->addAttribute('type', 'text/javascript');
