@@ -175,6 +175,12 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 
 		// Create additional settings that are needed by pz-client.js.
 		$jsVariables = array(
+			'authURLServiceProxy' => '"' . $this->conf['authURLServiceProxy'] . '"',
+			'pazpar2URL' => '"' . $this->conf['pazpar2URL'] . '"',
+			'serviceProxyURL' => '"' . $this->conf['serviceProxyURL'] . '"',
+			'pageLanguage' => '"' . $this->conf['pageLanguage'] . '"',
+			'useServiceProxy' => (($this->conf['useServiceProxy']) ? 'true' : 'false'),
+
 			'useGoogleBooks' => (($this->conf['useGoogleBooks']) ? 'true' : 'false'),
 			'useMaps' => (($this->conf['useMaps']) ? 'true' : 'false'),
 			'useZDB' => (($this->conf['useZDB']) ? 'true' : 'false'),
