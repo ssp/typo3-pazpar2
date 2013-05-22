@@ -31,7 +31,6 @@ plugin.tx_pazpar2 {
 		useMaps = 1
 		useZDB = 1
 		ZDBIP = 0
-		useAutocomplete = 0
 
 		# only settable via TypoScript
 		siteName =
@@ -42,6 +41,19 @@ plugin.tx_pazpar2 {
 			bibtex = 1
 		}
 		showKVKLink = 1
+
+		useServiceProxy = 0
+		authURLServiceProxy = /service-proxy-auth
+		pazpar2URL = /pazpar2
+		serviceProxyURL = /service-proxy	
+		pageLanguage = en
+		useAutocomplete = 0
+		autocompleteURL = {
+		   title = /api/autocomplete?query=
+   		   author = /api/autocomplete?query=
+   		   person = /api/autocomplete?query=
+   		   any = /api/autocomplete?query=
+		}
 
 		CSSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2.css
 		pz2JSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2.js
