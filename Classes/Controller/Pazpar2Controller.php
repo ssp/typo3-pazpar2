@@ -230,6 +230,9 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 		if ( $this->conf['useAutocomplete'] > 0 ) {
 			$jsCommand .= "$(document).ready(function() { pp2_autocomplete_init_all() } );\n";
 		}
+		if ( $this->conf['useServiceProxy'] > 0 && $this->conf['authURLServiceProxy']) {
+			$jsCommand .= "$(document).ready(function() { jQuery.get(serviceProxyURL) } );\n";
+		}
 
 		// Add the JavaScript setup commands to <head>.
 		$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
