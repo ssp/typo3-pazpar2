@@ -44,7 +44,7 @@ plugin.tx_pazpar2 {
 
 		useServiceProxy = 0
 		authURLServiceProxy = /service-proxy-auth
-		pazpar2URL = /pazpar2
+		pazpar2URL = /pazpar2/search.pz2
 		serviceProxyURL = /service-proxy	
 		pageLanguage = en
 		useAutocomplete = 0
