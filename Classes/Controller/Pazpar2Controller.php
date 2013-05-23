@@ -144,6 +144,28 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 		$cssTag->addAttribute('media', 'all');
 		$this->response->addAdditionalHeaderData( $cssTag->render() );
 
+		// before pz2.js is included
+		$jsVariablesSP = array(
+			'authURLServiceProxy' => '"' . $this->conf['authURLServiceProxy'] . '"',
+			'pazpar2URL' => '"' . $this->conf['pazpar2URL'] . '"',
+			'serviceProxyURL' => '"' . $this->conf['serviceProxyURL'] . '"',
+			'pageLanguage' => '"' . $this->conf['pageLanguage'] . '"',
+			'useServiceProxy' => (($this->conf['useServiceProxy']) ? 'true' : 'false')
+		);
+		$jsCommand = "\n";
+		foreach ($jsVariablesSP as $name => $value) {
+			$jsCommand .= $name . ' = ' . $value . ";\n";
+		}
+		
+		$jsCommand .= "var pazpar2path = useServiceProxy ? serviceProxyURL : pazpar2URL;\n";
+		
+		// Add further JavaScript initialisation commands to <head>.
+		$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
+		$scriptTag->addAttribute('type', 'text/javascript');
+		$scriptTag->setContent($jsCommand);
+		$this->response->addAdditionalHeaderData( $scriptTag->render() );
+		
+		
 		// Add pz2.js to <head>.
 		// This is Indexdata’s JavaScript that ships with the pazpar2 software.
 		$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
@@ -173,14 +195,10 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 		$this->response->addAdditionalHeaderData( $scriptTag->render() );
 
 
+			
 		// Create additional settings that are needed by pz-client.js.
+		// after pz2.js is included
 		$jsVariables = array(
-			'authURLServiceProxy' => '"' . $this->conf['authURLServiceProxy'] . '"',
-			'pazpar2URL' => '"' . $this->conf['pazpar2URL'] . '"',
-			'serviceProxyURL' => '"' . $this->conf['serviceProxyURL'] . '"',
-			'pageLanguage' => '"' . $this->conf['pageLanguage'] . '"',
-			'useServiceProxy' => (($this->conf['useServiceProxy']) ? 'true' : 'false'),
-
 			'useGoogleBooks' => (($this->conf['useGoogleBooks']) ? 'true' : 'false'),
 			'useMaps' => (($this->conf['useMaps']) ? 'true' : 'false'),
 			'useZDB' => (($this->conf['useZDB']) ? 'true' : 'false'),
@@ -191,6 +209,7 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			'showKVKLink' => (($this->conf['showKVKLink']) ? 'true' : 'false'),
 			'useKeywords' => (($this->conf['useKeywords']) ? 'true' : 'false')
 		);
+		
 		if (array_key_exists('exportFormats', $this->conf)) {
 			$exportFormats = Array();
 			foreach ($this->conf['exportFormats'] as $format => $value) {
@@ -255,8 +274,10 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			$this->response->addAdditionalHeaderData( $scriptTag->render() );
 		}
 
+		$jsCommand = "\n";
+
 		// Make jQuery initialise pazpar2 when the DOM is ready.
-		$jsCommand = "jQuery(document).ready(pz2ClientDomReady);\n";
+		$jsCommand .= "\njQuery(document).ready(pz2ClientDomReady);\n";
 
 		// Add Google Books support if asked to do so.
 		if ( $this->conf['useGoogleBooks'] || $this->conf['useMaps'] ) {
