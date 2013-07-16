@@ -2,13 +2,10 @@
 <f:layout name="Layout"/>
 
 <f:section name="form">
-	<f:render partial="javascript" arguments="{_all}"/>
+	<f:render partial="javascript" arguments="{conf: conf, localisationOverrides: localisationOverrides}"/>
 	<t3jquery:addJQueryAndScript jsurl="{conf.pz2urlrecipeJSPath}"/>
 
 	<f:if condition="{conf.showSearchForm}==1">
-		<f:render partial="form" arguments="{query: query,
-												extended: extended,
-												conf: conf}"
-		/>
+		<f:render partial="form" arguments="{query: query, extended: extended, conf: conf}"/>
 	</f:if>
 </f:section>

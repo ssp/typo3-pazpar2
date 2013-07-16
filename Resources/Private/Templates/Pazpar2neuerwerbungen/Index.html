@@ -2,11 +2,8 @@
 <f:layout name="Layout"/>
 
 <f:section name="form">
-	<f:render partial="javascript" arguments="{_all}"/>
+	<f:render partial="javascript" arguments="{conf: conf, localisationOverrides: localisationOverrides}"/>
 	<t3jquery:addJQueryAndScript jsurl="{conf.pz2-neuerwerbungenJSPath}" jsready="pz2neuerwerbungenDOMReady();"/>
 
-	<f:render partial="neuerwerbungen-form" 
-			  arguments="{pazpar2neuerwerbungen: pazpar2neuerwerbungen,
-							conf: conf}"
-	/>
+	<f:render partial="neuerwerbungen-form" arguments="{pazpar2neuerwerbungen: pazpar2neuerwerbungen, conf: conf}"/>
 </f:section>

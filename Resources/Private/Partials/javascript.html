@@ -25,7 +25,7 @@
 	</f:if>
 </t3jquery:addJQueryAndScript>
 
-<f:if condition="{0:conf.useGoogleBooks, 1:useMaps} != {0:0, 1:0}">
+<f:if condition="{0:conf.useGoogleBooks, 1:conf.useMaps} != {0:0, 1:0}">
 	<t3jquery:addJQueryAndScript jsurl="https://www.google.com/jsapi"/>
 </f:if>
 
