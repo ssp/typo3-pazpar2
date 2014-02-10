@@ -102,20 +102,6 @@ class Tx_Pazpar2_Controller_Pazpar2neuerwerbungenController extends Tx_Pazpar2_C
 		$cssTag->addAttribute('href', $this->conf['pz2-neuerwerbungenCSSPath']);
 		$cssTag->addAttribute('media', 'all');
 		$this->response->addAdditionalHeaderData( $cssTag->render() );
-
-		// Add pz2-neuerwerbungen.js to <head>.
-		$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
-		$scriptTag->addAttribute('type', 'text/javascript');
-		$scriptTag->addAttribute('src', $this->conf['pz2-neuerwerbungenJSPath']) ;
-		$scriptTag->forceClosingTag(true);
-		$this->response->addAdditionalHeaderData( $scriptTag->render() );
-
-		// Make jQuery initialise pazpar2neuerwerbungen when the DOM is ready.
-		$jsCommand = 'jQuery(document).ready(pz2neuerwerbungenDOMReady);';
-		$scriptTag = new Tx_Fluid_Core_ViewHelper_TagBuilder('script');
-		$scriptTag->addAttribute('type', 'text/javascript');
-		$scriptTag->setContent($jsCommand);
-		$this->response->addAdditionalHeaderData( $scriptTag->render() );
 	}
 
 }

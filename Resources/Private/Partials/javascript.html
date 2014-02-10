@@ -1,0 +1,35 @@
+{namespace t3jquery=Tx_T3jquery_ViewHelpers}
+{namespace pz2=Tx_Pazpar2_ViewHelpers}
+
+<t3jquery:addJQueryAndScript jsurl="{conf.pz2JSPath}"/>
+
+<t3jquery:addJQueryAndScript jsurl="{conf.pz2-clientJSPath}"/>
+
+<t3jquery:addJQueryAndScript>
+	pz2client.init({pz2:json(data:serviceConfiguration)});
+
+	<f:if condition="{localisationOverrides}">
+		<f:for each="{localisationOverrides}" as="dictionary" key="languageCode">
+			<f:for each="{dictionary}" as="localisedString" key="key">
+	pz2client.overrideLocalisation({pz2:json(data:languageCode)}, {pz2:json(data:key)}, {pz2:json(data:localisedString)});</f:for>
+		</f:for>
+	</f:if>
+
+	<f:if condition="{conf.triggeredByNKWGOK}">
+	nkwgokItemSelected = function (element) {
+		var searchTerm = element.getAttribute("query");
+		if (searchTerm) {
+			pz2client.triggerSearchForForm(undefined, ["(" +  searchTerm + ")"]);
+		}
+	}
+	</f:if>
+</t3jquery:addJQueryAndScript>
+
+<f:if condition="{0:conf.useGoogleBooks, 1:useMaps} != {0:0, 1:0}">
+	<t3jquery:addJQueryAndScript jsurl="https://www.google.com/jsapi"/>
+</f:if>
+
+<f:if condition="{conf.useHistogramForYearFacets}">
+	<t3jquery:addJQueryAndScript jsurl="{conf.flotJSPath}"/>
+	<t3jquery:addJQueryAndScript jsurl="{conf.flotSelectionJSPath}"/>
+</f:if>

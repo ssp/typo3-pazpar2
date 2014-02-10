@@ -2,7 +2,8 @@
 /*******************************************************************************
  * Copyright notice
  *
- * Copyright (C) 2013 by Sven-S. Porst <ssp-web@earthlingsoft.net>
+ * Copyright 2013 Sven-S. Porst, Göttingen State and University Library
+ *                <porst@sub.uni-goettingen.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,58 +26,27 @@
 
 
 /**
- * Pazpar2serviceproxyController.php
- *
- * Main controller for pazpar2 Service Proxy plug-in,
- * of the pazpar2 Extension.
- *
- * @author Sven-S. Porst <ssp-web@earthlingsoft.net>
+ * View Helper to return the passed array, string or number as JSON.
  */
+class Tx_Pazpar2_ViewHelpers_JSONViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
-
-
-/**
- * Controller for the pazpar2 Service Proxy package.
- */
-class Tx_Pazpar2_Controller_Pazpar2serviceproxyController extends Tx_Pazpar2_Controller_Pazpar2Controller {
 
 	/**
-	 * Returns the path of the pazpar2 service on the server or NULL.
-	 *
-	 * @return String|NULL
+	 * Registers own arguments.
 	 */
-	protected function getPazpar2Path () {
-		return $this->conf['serviceProxyPath'];
+	public function initializeArguments() {
+		parent::initializeArguments();
+		$this->registerArgument('data', 'array|string|int|float', 'The data to output as JSON', TRUE);
 	}
 
 
-
 	/**
-	 * @return Tx_Pazpar2_Domain_Model_Query
+	 * @return string
 	 */
-	protected function createQuery () {
-		$query = t3lib_div::makeInstance('Tx_Pazpar2_Domain_Model_QueryServiceProxy');
-		$query->setServiceProxyAuthPath($this->conf['serviceProxyAuthPath']);
-		$query->setPazpar2Path($this->getPazpar2Path());
-		return $query;
-	}
-
-	
-
-	/**
-	 * Returns variables for the service configuration.
-	 *
-	 * @return void
-	 */
-	protected function serviceConfiguration () {
-		$serviceConfiguration = array(
-			'useServiceProxy' => TRUE,
-			'serviceProxyAuthPath' => $this->conf['serviceProxyAuthPath'],
-			'pazpar2Path' => $this->conf['serviceProxyPath']
-		);
-
-		return $serviceConfiguration;
+	public function render() {
+		return json_encode($this->arguments['data']);
 	}
 
 }
+
 ?>

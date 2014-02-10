@@ -1,6 +1,10 @@
+{namespace t3jquery=Tx_T3jquery_ViewHelpers}
 <f:layout name="Layout"/>
 
 <f:section name="form">
+	<f:render partial="javascript" arguments="{_all}"/>
+	<t3jquery:addJQueryAndScript jsurl="{conf.pz2-neuerwerbungenJSPath}" jsready="pz2neuerwerbungenDOMReady();"/>
+
 	<f:render partial="neuerwerbungen-form" 
 			  arguments="{pazpar2neuerwerbungen: pazpar2neuerwerbungen,
 							conf: conf}"
