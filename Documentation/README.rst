@@ -194,8 +194,12 @@ after the option name.
       title, person) and values: URLs to which the search term can be
       appended to create a query for an autocompletion list.
    -  ``autocompleteSetupFunction`` []: name of a JavaScript
-      ``function (URL, fieldName) that is run when setting up the autocomplete feature. Returns an object for configuring [jQuery UI’s autocomplete widget](http://api.jqueryui.com/autocomplete/). Functions``\ autocompleteSetupArray\ ``for sources that return JSON arrays and``\ autocompleteSolrSpellcheck\`
-      for querying a Solr spellcheck component are predefined.
+      ``function (URL, fieldName)`` that is run when setting up the autocomplete
+      feature. Returns an object for configuring `jQuery UI’s autocomplete
+      widget <http://api.jqueryui.com/autocomplete/>`__.
+      Functions ``autocompleteSetupArray`` for sources that return JSON arrays
+      and ``autocompleteSolrSpellcheck`` for querying a Solr spellcheck
+      component are predefined.
    -  ``allowExtendedSearch`` [1]: if 1, the link to show the extended
       search form is displayed
    -  ``fulltextSearch`` [0]: configure checkbox to do full text search
@@ -243,7 +247,7 @@ after the option name.
       bibliographic records displayed in the page. Note that Zotero 3 is
       the first version capable of discovering COinS data that are
       dynamically added to the page.
-   -  ``exportFormats`` [{ris = 0bibtex = 0}]: an array with export
+   -  ``exportFormats`` [{ris = 0 bibtex = 0}]: an array with export
       format names as keys. Set the value to 1/0 to enable/disable a
       specific format. For active formats links to downloads of
       bibliographic metadata are added to the detail view of records.
