@@ -1,11 +1,14 @@
 {namespace t3jquery=Tx_T3jquery_ViewHelpers}
 {namespace pz2=Tx_Pazpar2_ViewHelpers}
-
 <t3jquery:addJQueryAndScript jsurl="{conf.pz2JSPath}"/>
 
 <t3jquery:addJQueryAndScript jsurl="{conf.pz2-clientJSPath}"/>
 
 <t3jquery:addJQueryAndScript>
+	<f:if condition="{conf.autocompleteSetupFunction}">
+		pz2client.config.autocompleteSetupFunction = {conf.autocompleteSetupFunction};
+	</f:if>
+
 	pz2client.init({pz2:json(data:serviceConfiguration)});
 
 	<f:if condition="{localisationOverrides}">
@@ -23,6 +26,7 @@
 		}
 	}
 	</f:if>
+
 </t3jquery:addJQueryAndScript>
 
 <f:if condition="{0:conf.useGoogleBooks, 1:conf.useMaps} != {0:0, 1:0}">
