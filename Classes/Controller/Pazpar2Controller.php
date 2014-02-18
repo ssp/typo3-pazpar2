@@ -209,6 +209,12 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			'useKeywords' => ($this->conf['useKeywords'] == TRUE)
 		));
 
+		// Use flexformOverride array to overwrite settings from the flexform.
+		// Needed to allow everything from TypoScript without need for the flexform.
+		if ($this->conf['flexformOverride'] && is_array($this->conf['flexformOverride'])) {
+			$configuration = array_merge($configuration, $this->conf['flexformOverride']);
+		}
+
 		if (array_key_exists('exportFormats', $this->conf)) {
 			$exportFormats = Array();
 			foreach ($this->conf['exportFormats'] as $format => $value) {
