@@ -206,7 +206,11 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			'provideCOinSExport' => ($this->conf['provideCOinSExport'] == TRUE),
 			'showExportLinksForEachLocation' => ($this->conf['showExportLinksForEachLocation'] == TRUE),
 			'showKVKLink' => ($this->conf['showKVKLink'] == TRUE),
-			'useKeywords' => ($this->conf['useKeywords'] == TRUE)
+			'useKeywords' => ($this->conf['useKeywords'] == TRUE),
+			'historyItems' => (int)$this->conf['historyItems'],
+			'addHistoryLink' => ($this->conf['addHistoryLink'] == TRUE),
+			'useClipboard' => ($this->conf['useClipboard'] == TRUE),
+			'removeDiacriticsBeforeSearch' => ($this->conf['removeDiacriticsBeforeSearch'] == TRUE)
 		));
 
 		// Use flexformOverride array to overwrite settings from the flexform.
