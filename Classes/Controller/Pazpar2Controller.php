@@ -202,6 +202,7 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			'useMaps' => ($this->conf['useMaps'] == TRUE),
 			'useZDB' => ($this->conf['useZDB'] == TRUE),
 			'ZDBUseClientIP' => ($this->conf['ZDBIP'] == FALSE),
+			'usePazpar2Facets' => ($this->conf['usePazpar2Facets'] == TRUE),
 			'useHistogramForYearFacets' => ($this->conf['useHistogramForYearFacets'] == TRUE),
 			'provideCOinSExport' => ($this->conf['provideCOinSExport'] == TRUE),
 			'showExportLinksForEachLocation' => ($this->conf['showExportLinksForEachLocation'] == TRUE),
@@ -210,6 +211,7 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			'historyItems' => (int)$this->conf['historyItems'],
 			'addHistoryLink' => ($this->conf['addHistoryLink'] == TRUE),
 			'useClipboard' => ($this->conf['useClipboard'] == TRUE),
+			'addClipboardLink' => ($this->conf['addClipboardLink'] == TRUE),
 			'removeDiacriticsBeforeSearch' => ($this->conf['removeDiacriticsBeforeSearch'] == TRUE)
 		));
 

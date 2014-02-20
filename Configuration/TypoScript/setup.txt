@@ -49,6 +49,7 @@ plugin.tx_pazpar2 {
 		pz2-clientJSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2-client.js
 		flotJSPath = EXT:pazpar2/Resources/Public/pz2-client/flot/jquery.flot.js
 		flotSelectionJSPath = EXT:pazpar2/Resources/Public/pz2-client/flot/jquery.flot.selection.js
+		jquery-storageJSPath = EXT:pazpar2/Resources/Public/pz2-client/jquery-storage/jquery.storageapi.min.js
 
 		useSortMenu = 0
 		sortOrder {
@@ -61,6 +62,8 @@ plugin.tx_pazpar2 {
 			# 4.fieldName = title-number-section
 			# 4.direction = ascending
 		}
+
+		usePazpar2Facets = 0
 
 		termLists {
 			xtargets {
@@ -102,6 +105,7 @@ plugin.tx_pazpar2 {
 		historyItems = 99
 		addHistoryLink = 0
 		useClipboard = 0
+		addClipboardLink = 0
 
 		removeDiacriticsBeforeSearch = 0
 	}
