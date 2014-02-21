@@ -5,12 +5,8 @@
 	Need forceOnTop to ensure we load before scripts inserted with
 	page.includeJS, so our objects are created before people try to
 	modify / configure them.
-
-	The order of loading pz2.js and pz2-client.js as forceOnTop seems to
-	reverse the order of the tags.
 </f:comment>
 <t3jquery:addJQueryAndScript forceOnTop="1"  jsurl="{conf.pz2-clientJSPath}"/>
-<t3jquery:addJQueryAndScript forceOnTop="1" jsurl="{conf.pz2JSPath}"/>
 
 <f:if condition="{0: conf.useClipboard, 1:conf.historyItems} != {0:0, 1:0}">
 	<t3jquery:addJQueryAndScript jsurl="{conf.jquery-storageJSPath}"/>
