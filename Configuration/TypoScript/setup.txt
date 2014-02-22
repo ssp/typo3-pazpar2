@@ -105,8 +105,6 @@ plugin.tx_pazpar2 {
 		addHistoryLink = 0
 		useClipboard = 0
 		addClipboardLink = 0
-
-		removeDiacriticsBeforeSearch = 0
 	}
 }
 

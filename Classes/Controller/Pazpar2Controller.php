@@ -211,8 +211,7 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			'historyItems' => (int)$this->conf['historyItems'],
 			'addHistoryLink' => ($this->conf['addHistoryLink'] == TRUE),
 			'useClipboard' => ($this->conf['useClipboard'] == TRUE),
-			'addClipboardLink' => ($this->conf['addClipboardLink'] == TRUE),
-			'removeDiacriticsBeforeSearch' => ($this->conf['removeDiacriticsBeforeSearch'] == TRUE)
+			'addClipboardLink' => ($this->conf['addClipboardLink'] == TRUE)
 		));
 
 		// Use flexformOverride array to overwrite settings from the flexform.
