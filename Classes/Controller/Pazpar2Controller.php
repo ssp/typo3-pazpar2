@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright notice
  *
- * Copyright (C) 2010-2013 by Sven-S. Porst, SUB Göttingen
- * <porst@sub.uni-goettingen.de>
+ * Copyright (C) 2010-2014 by Sven-S. Porst
+ * <ssp-web@earthlingsoft.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
  *
  * Provides the main controller for pazpar2 plug-in.
  *
- * @author Sven-S. Porst <porst@sub-uni-goettingen.de>
+ * @author Sven-S. Porst <ssp-web@earthlingsoft.net>
  */
 
 
@@ -89,6 +89,10 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 					$this->conf[$key] = $processedPath;
 				}
 			}
+		}
+
+		if ( $this->settings['flexformOverride'] ) {
+			$this->conf = array_merge($this->conf, $this->conf['flexformOverride']);
 		}
 
 		$this->query = $this->createQuery();
