@@ -43,6 +43,7 @@ plugin.tx_pazpar2 {
 			bibtex = 0
 		}
 		showKVKLink = 0
+		showOpenURLLink = 0
 
 		CSSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2.css
 		pz2-clientJSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2-client.js

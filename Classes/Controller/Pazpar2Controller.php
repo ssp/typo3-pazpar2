@@ -207,6 +207,7 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			'provideCOinSExport' => ($this->conf['provideCOinSExport'] == TRUE),
 			'showExportLinksForEachLocation' => ($this->conf['showExportLinksForEachLocation'] == TRUE),
 			'showKVKLink' => ($this->conf['showKVKLink'] == TRUE),
+			'showOpenURLLink' => ($this->conf['showOpenURLLink'] == TRUE),
 			'useKeywords' => ($this->conf['useKeywords'] == TRUE),
 			'historyItems' => (int)$this->conf['historyItems'],
 			'addHistoryLink' => ($this->conf['addHistoryLink'] == TRUE),
