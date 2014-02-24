@@ -2,8 +2,7 @@
 /*******************************************************************************
  * Copyright notice
  *
- * Copyright (C) 2010-2012 by Sven-S. Porst, SUB Göttingen
- * <porst@sub.uni-goettingen.de>
+ * Copyright (C) 2010-2014 by Sven-S. Porst <ssp-web@earthlingsoft.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -191,7 +190,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	/**
 	 * @return Boolean
 	 */
-	protected function getDidRun () {
+	public function getDidRun () {
 		return $this->didRun;
 	}
 
