@@ -1,0 +1,2 @@
+{namespace pz2=Tx_Pazpar2_ViewHelpers}
+<pz2:JSON data="{results:query.results, stat:query.latestStatReply}"/>

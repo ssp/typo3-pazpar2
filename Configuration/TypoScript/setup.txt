@@ -22,6 +22,21 @@ pazpar2searchplugin {
 }
 
 
+# TYPO3 page type for JSON download
+# To be used with query parameters:
+# * type=1380124799
+# * tx_pazpar2_pazpar2%5Bformat%5D=json
+tx_pazpar2_json = PAGE
+tx_pazpar2_json {
+	typeNum = 1393975639
+	10 < tt_content.list.20.pazpar2_pazpar2
+	config {
+		disableAllHeaderCode = 1
+		additionalHeaders = Content-type:application/json;charset=utf-8
+	}
+}
+
+
 plugin.tx_pazpar2 {
 	settings {
 		# exposed through flexform
