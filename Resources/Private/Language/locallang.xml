@@ -33,9 +33,9 @@
 
 			<!-- Sort controls -->
 			<label index="Sort by">Sort by</label>
-			<label index="Age">Age</label>
-			<label index="Author">Author</label>
-			<label index="Title">Title</label>
+			<label index="sort-date">Age</label>
+			<label index="sort-author">Author</label>
+			<label index="sort-relevance">“Relevance”</label>
 
 			<!-- Status strings -->
 			<label index="No information available yet.">No information available yet.</label>
@@ -173,9 +173,9 @@ Please run the search from a German university network for more complete results
 
 			<!-- Sort controls -->
 			<label index="Sort by">Sortieren nach</label>
-			<label index="Age">Alter</label>
-			<label index="Author">Autor</label>
-			<label index="Title">Titel</label>
+			<label index="sort-date">Alter</label>
+			<label index="sort-author">Autor</label>
+			<label index="sort-relevance">“Relevanz”</label>
 
 			<!-- Status strings -->
 			<label index="No information available yet.">Noch keine Informationen verfügbar.</label>

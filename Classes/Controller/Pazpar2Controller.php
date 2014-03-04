@@ -110,6 +110,7 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 	public function indexAction () {
 		$this->addResourcesToHead();
 		$arguments = $this->request->getArguments();
+		$this->view->assign('arguments', $arguments);
 		$this->view->assign('extended', $arguments['extended']);
 		$this->view->assign('query', $this->query);
 		if (array_key_exists('useJS', $arguments) && $arguments['useJS'] !== 'yes') {
@@ -132,9 +133,9 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 		
 		if (array_key_exists('sort', $arguments)) {
 			// Sort order has been set by select on the page.
-			$criteria = explode('--', $arguments['sort']);
+			$criteria = explode(',', $arguments['sort']);
 			foreach ($criteria as $criterion) {
-				$parts = explode('-', $criterion);
+				$parts = explode(':', $criterion);
 				if (count($parts) == 2) {
 					$sortCriteria[] = Array (
 						'fieldName' => $parts[0],

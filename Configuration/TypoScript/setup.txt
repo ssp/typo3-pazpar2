@@ -51,16 +51,41 @@ plugin.tx_pazpar2 {
 		flotSelectionJSPath = EXT:pazpar2/Resources/Public/pz2-client/flot/jquery.flot.selection.js
 		jquery-storageJSPath = EXT:pazpar2/Resources/Public/pz2-client/jquery-storage/jquery.storageapi.min.js
 
-		useSortMenu = 0
-		sortOrder {
-			1.fieldName = date
-			1.direction = descending
-			# 2.fieldName = author
-			# 2.direction = ascending
-			# 3.fieldName = title
-			# 3.direction = ascending
-			# 4.fieldName = title-number-section
-			# 4.direction = ascending
+		sortConfiguration {
+			1 {
+				id = date
+				default = 1
+				order {
+					1.fieldName = date
+					1.direction = descending
+					2.fieldName = author
+					2.direction = ascending
+					# 3.fieldName = title
+					# 3.direction = ascending
+					# 4.fieldName = title-number-section
+					# 4.direction = ascending
+				}
+			}
+			#2 {
+			#	id = author
+			#	order {
+			#		1.fieldName = author
+			#		1.direction = ascending
+			#		2.fieldName = date
+			#		2.direction = descending
+			#	}
+			#}
+			#3 {
+			#	id = relevance
+			#	order {
+			#		1.fieldName = relevance
+			#		1.direction = descending
+			#		2.fieldName = date
+			#		2.direction = descending
+			#		3.fieldName = author
+			#		3.direction = ascending
+			#	}
+			#}
 		}
 
 		usePazpar2Facets = 0

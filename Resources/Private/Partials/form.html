@@ -1,3 +1,5 @@
+{namespace pz2=Tx_Pazpar2_ViewHelpers}
+
 <f:form class="pz2-searchForm {f:if(condition:'{conf.allowExtendedSearch}', else:'pz2-basic', then:'{f:if(condition: \'{extended}\', then: \'pz2-extended\', else:\'pz2-basic\')}')}" method="get">
 	<div class="pz2-mainForm">
 		<div class="pz2-fieldContainer pz2-field-all">
@@ -69,18 +71,28 @@
 	</div>
 
 	<div class="pz2-ranking">
-		<f:if condition="{conf.useSortMenu}==1">
-			<f:translate key="Sort by"/>
-			<f:form.select name="sort" class="pz2-sort"
-				options="{  date-d--author-a--title-a: '{f:translate(key:\'Age\')}',
-							author-a--date-d--title-a: '{f:translate(key:\'Author\')}',
-							title-a--author-a--date-d: '{f:translate(key:\'Title\')}'   }"
-				value="date-d--author-a--title-a" />
-		</f:if>
+		<f:translate key="Sort by"/>
+		<f:form.select
+			name="sort"
+			class="pz2-sort"
+			options="{pz2:sortSelectOptions(configuration:conf.sortConfiguration)}"
+			value="{f:if(
+				condition:arguments.sort,
+				then:arguments.sort,
+				else:'{pz2:sortSelectOptionsDefault(configuration:conf.sorConfiguration)}'
+			)}"
+		/>
 
-		<f:form.select name="perpage" class="pz2-perPage"
+		<f:form.select
+			name="perpage"
+			class="pz2-perPage"
 			options="{10:10, 20:20, 50:50, 100:100}"
-			value="{conf.resultsPerPage}" />
+			value="{f:if(
+				condition:arguments.perpage,
+				then:arguments.perpage,
+				else:conf.resultsPerPage
+			)}"
+		/>
 	</div>
 
 	<f:form.hidden name="useJS" value="no"/>
