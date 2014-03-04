@@ -261,6 +261,23 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 
 
 	/**
+	 * Array holding the latest stat reply received from pazpar2 while waiting
+	 * for the queries to finish.
+	 * 
+	 * @var array
+	 */
+	private $latestStatReply = array();
+
+	/**
+	 * @return array
+	 */
+	public function getLatestStatReply () {
+		return $this->latestStatReply;
+	}
+
+
+
+	/**
 	 * Array holding the search results after they are downloaded.
 	 * The array's element can be displayed by the View Helper class
 	 * Tx_Pazpar2_ViewHelpers_ResultViewHelper.
@@ -272,7 +289,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	/**
 	 * @return array
 	 */
-	public function getResults() {
+	public function getResults () {
 		return $this->results;
 	}
 
@@ -530,18 +547,18 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 		$result = False;
 
 		$statReplyString = $this->fetchURL($this->pazpar2StatURL());
-		$statReply = t3lib_div::xml2array($statReplyString);
+		$this->latestStatReply = t3lib_div::xml2array($statReplyString);
 
-		if ($statReply) {
+		if ($this->latestStatReply) {
 			// The progress variable is a string representing a number between
 			// 0.00 and 1.00. 
 			// Casting it to int gives 0 as long as the value is < 1.
-			$progress = (int)$statReply['progress'];
+			$progress = (int)$this->latestStatReply['progress'];
 			$result = ($progress === 1);
 			if ($result === True) {
 				// We are done: note that and get the record count.
 				$this->setDidRun(True);
-				$this->setTotalResultCount($statReply['hits']);
+				$this->setTotalResultCount($this->latestStatReply['hits']);
 			}
 		}
 		else {
@@ -574,6 +591,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 				}
 			}
 		}
+
 		return $result;
 	}
 
@@ -633,7 +651,6 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 			// need xml2tree here as xml2array fails when dealing with arrays of tags with the same name
 			$showReplyTree = t3lib_div::xml2tree($showReplyString);
 			$showReply = $showReplyTree['show'][0]['ch'];
-
 			if ($showReply) {
 				$status = $showReply['status'][0]['values'][0];
 				if ($status == 'OK') {
