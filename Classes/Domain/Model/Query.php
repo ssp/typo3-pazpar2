@@ -92,6 +92,22 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 
 
 	/**
+	 * The maximal number of results to fetch from pazpar2.
+	 *
+	 * @var int
+	 */
+	protected $maximumResults = 1000;
+
+	/**
+	 * @return int
+	 */
+	public function getMaximumResults () {
+		return $this->maximumResults;
+	}
+
+
+
+	/**
 	 * Set search query elements from the request’s arguments array.
 	 * 
 	 * @param array $newArguments 
@@ -104,6 +120,9 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 		$this->queryStringPerson = trim($newArguments['queryStringPerson']);
 		$this->queryStringKeyword = trim($newArguments['queryStringKeyword']);
 		$this->queryStringDate = trim($newArguments['queryStringDate']);
+		if ($newArguments['maximumResults']) {
+			$this->maximumResults = (int)$newArguments['maximumResults'];
+		}
 	}
 
 
@@ -633,7 +652,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	 * Stores the results in $results and the total result count in $totalResultCount.
 	 */
 	protected function fetchResults () {
-		$maxResults = 1000; // limit results
+		$maxResults = $this->getMaximumResults(); // limit results
 		if (count($this->conf['exportFormats']) > 0) {
 			// limit results even more if we are creating export data
 			$maxResults = $maxResults / (count($this->conf['exportFormats']) + 1);
