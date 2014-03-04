@@ -416,7 +416,32 @@ private function appendCOinSSpansToContainer ($result, $container) {
 
 
 /**
- *
+ * @param array $result
+ * @param string $fieldName
+ * @param string $stringToMatch
+ * @param boolean $surnameOnly
+ */
+private function cleanFieldBasedOnString (&$result, $fieldName, $stringToMatch, $surnameOnly) {
+	$mdFieldName = 'md-' . $fieldName;
+	$mdCleanFieldName = $fieldName . '-clean';
+	$result[$mdCleanFieldName] = array();
+
+	foreach($result[$mdFieldName] as $item) {
+		$itemToFind = $item;
+		if ($surnameOnly) {
+			$itemParts = explode(',', $itemToFind);
+			$itemToFind = trim($itemParts[0]);
+		}
+
+		if (strpos($stringToMatch, $item) === FALSE) {
+			$result[$mdCleanFieldName][] = $item;
+		}
+	}
+}
+
+
+
+/**
  * @param array $result
  * @return DOMElement
  */
@@ -430,49 +455,26 @@ private function renderDetails ($result) {
 	$detailsDiv->appendChild($clearSpan);
 	$clearSpan->setAttribute('class', 'pz2-clear');
 
-	/*	A somewhat sloppy heuristic to create cleaned up author and other-person
-		lists to avoid duplicating names listed in title-responsiblity already:
-		* Do _not_ separately display authors and other-persons whose apparent
-			surname appears in the title-reponsibility field to avoid duplication.
-		* Completely omit the author list if no title-responsibility field is present
-			as author fields are used in its place then.
-	*/
+	/**
+	 * Somewhat sloppy heuristic for creating cleaned up lists.
+	 */
 	$allResponsibility = '';
-	
 	if ($result['md-title-responsibility']) {
-		foreach ($result['md-title-responsibility'] as $responsibility) {
-			$allResponsibility .= $responsibility['values'][0] . '; ';
-		}
-		$authors = $result['md-author'];
-		if ($authors) {
-			$result['md-author-clean'] = Array();
-			foreach ($authors as $author) {
-				$nameParts = explode(",", $author['values'][0]);
-				$authorSurname = trim($nameParts[0]);
-				if (strpos($allResponsibility, $authorSurname) === False) {
-					$result['md-author-clean'][] = $author;
-				}
-			}
-		}
+		$allResponsibility = implode ('; ', $result['md-title-responsibility']);
+
+		$this->cleanFieldBasedOnString($result, 'author', $allResponsibility, TRUE);
+		$this->cleanFieldBasedOnString($result, 'other-person', $allResponsibility, TRUE);
+		$this->cleanFieldBasedOnString($result, 'meeting', $allResponsibility, FALSE);
+		$this->cleanFieldBasedOnString($result, 'corporate', $allResponsibility, FALSE);
 	}
 	else if (array_key_exists('md-author', $result) && count($result['md-author']) > MAX_AUTHORS) {
 		$result['md-author-clean'] = array_slice($result['md-author'], MAX_AUTHORS);
 	}
 
-	$otherPeople = $result['md-other-person'];
-	if ($otherPeople) {
-		$result['md-other-person-clean'] = Array();
-		foreach ($otherPeople as $otherPerson) {
-			$nameParts = explode(",", $otherPerson['values'][0]);
-			$personSurname = trim($nameParts[0]);
-			if (strpos($allResponsibility, $personSurname) === False) {
-				$result['md-other-person-clean'][] = $otherPerson;
-			}
-		}
-	}
-
 	$this->appendInfoToContainer( $this->detailLineAuto('author-clean', $result), $detailsList);
 	$this->appendInfoToContainer( $this->detailLineAuto('other-person-clean', $result), $detailsList);
+	$this->appendInfoToContainer( $this->detailLineAuto('corporate-clean', $result), $detailsList);
+	$this->appendInfoToContainer( $this->detailLineAuto('meeting-clean', $result), $detailsList);
 	$this->appendInfoToContainer( $this->detailLineAuto('abstract', $result), $detailsList);
 	$this->appendInfoToContainer( $this->detailLineAuto('description', $result), $detailsList);
 	$this->appendInfoToContainer( $this->detailLineAuto('series-title', $result), $detailsList);
