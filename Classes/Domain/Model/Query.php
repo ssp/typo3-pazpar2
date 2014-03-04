@@ -80,7 +80,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	 * Array containing the sort conditions to use. Each of its elements
 	 *	is an array with the fields:
 	 *  'fieldName' - a string containing the name of the pazpar2 field to sort by
-	 *  'direction' - the string 'ascending' or 'descending'
+	 *  'direction' - 1 (ascending) or 0 (descending)
 	 *
 	 * @var Array
 	 */
@@ -459,8 +459,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	protected function sortOrderString () {
 		$sortOrderComponents = Array();
 		foreach ($this->getSortOrder() as $sortCriterion) {
-			$sortOrderComponents[] = $sortCriterion['fieldName'] . ':'
-									. (($sortCriterion['direction'] === 'descending') ? '0' : '1');
+			$sortOrderComponents[] = $sortCriterion['fieldName'] . ':' . $sortCriterion['direction'];
 		}
 		$sortOrderString = implode(',', $sortOrderComponents);
 

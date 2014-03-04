@@ -136,17 +136,16 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			$criteria = explode(',', $arguments['sort']);
 			foreach ($criteria as $criterion) {
 				$parts = explode(':', $criterion);
-				if (count($parts) == 2) {
+				if (count($parts) === 2) {
 					$sortCriteria[] = Array (
 						'fieldName' => $parts[0],
-						'direction' => ($parts[1] == 'd') ? 'descending' : 'ascending'
+						'direction' => $parts[1]
 					);
 				}
 			}
 		}
 		else {
-			// Use default sort order.
-			$sortCriteria = $this->conf['sortOrder'];
+			$sortCriteria[] = array('fieldName' => 'relevance', 'direction' => '0');
 		}
 		
 		return $sortCriteria;
