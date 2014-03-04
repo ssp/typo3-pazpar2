@@ -45,13 +45,15 @@ class Tx_Pazpar2_ViewHelpers_SortSelectOptionsDefaultViewHelper extends Tx_Fluid
 	public function render() {
 		$defaultOptionID = NULL;
 
-		foreach ($this->arguments['configuration'] as $key => $sortConfiguration) {
-			if ($sortConfiguration['default']) {
-				$defaultOptionID = $key;
-				break;
+		if (array_key_exists('configuration', $this->arguments)) {
+			foreach ($this->arguments['configuration'] as $key => $sortConfiguration) {
+				if ($sortConfiguration['default']) {
+					$defaultOptionID = $key;
+					break;
+				}
 			}
 		}
-
+		
 		return $defaultOptionID;
 	}
 
