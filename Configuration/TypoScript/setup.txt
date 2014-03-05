@@ -168,3 +168,18 @@ tx_pazpar2_json {
 	}
 }
 
+
+# TYPO3 page type for XML download in the ugly structure created
+# by t3lib_div::xml2array and re-converted to XML by t3lib_div::array2xml.
+# To be used with query parameters:
+# * type=1380124799
+# * tx_pazpar2_pazpar2%5Bformat%5D=json
+tx_pazpar2_xml = PAGE
+tx_pazpar2_xml {
+	typeNum = 1394012954
+	10 < tt_content.list.20.pazpar2_pazpar2
+	config {
+		disableAllHeaderCode = 1
+		additionalHeaders = Content-type:text/xml;charset=utf-8
+	}
+}
