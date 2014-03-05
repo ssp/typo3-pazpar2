@@ -4,16 +4,14 @@ pazpar2 TYPO3 extension
 A TYPO3 extension to include a bibliographic metasearch with Index Data’s
 `pazpar2 <http://www.indexdata.com/pazpar2/>`__ software on web pages.
 
-2010-2013 by `Sven-S. Porst <http://earthlingsoft.net/ssp/>`__, `SUB
-Göttingen <http://www.sub.uni-goettingen.de/>`__
-<`porst@sub.uni-goettingen.de <mailto:porst@sub.uni-goettingen.de?subject=pazpar2%20TYPO3%20Extension>`__\ >
+2010-2014 by `Sven-S. Porst <http://earthlingsoft.net/ssp/>`__ <`ssp-web@earthlingsoft.net <mailto:ssp-web@earthlingsoft.net?subject=pazpar2%20TYPO3%20Extension>`__\ >
 
 The extension includes the `flot <http://www.flotcharts.org/>`__
-JavaScript library for drawing graphs.
+and `jQuery Storage API  <https://github.com/julien-maurel/jQuery-Storage-API>`__
+JavaScript libraries.
 
 Feel free to send in comments or contribute improvements. You can fork
-the extension’s `repository at
-github <https://github.com/subugoe/typo3-pazpar2>`__.
+the extension’s `repository at github <https://github.com/ssp/typo3-pazpar2>`__.
 
 
 Introduction
@@ -33,14 +31,13 @@ that let the user initiate search queries and display the results:
    accessed through Service Proxy
 -  *pazpar2neuerwerbungen* which offers checkboxes, the state of which
    determines the search queries (this has been designed for the
-   specific needs of SUB Göttingen, relies on the nkwgok subject tree
-   TYPO3 extension and is unlikely to be useful elsewhere)
+   specific needs of `SUB Göttingen <http://www.sub.uni-goettingen.de>`__,
+   relies on the nkwgok subject tree TYPO3 extension and is unlikely to be
+   useful elsewhere)
 
-You can see the extension in use at the Library of Anglo-American
-Culture site which uses the *pazpar2* plug-in on its `home
-page <http://aac.sub.uni-goettingen.de/>`__ and the
-*pazpar2neuerwerbungen* plug-in on its `New Acquisitions
-page <http://aac.sub.uni-goettingen.de/new/>`__.
+You can see the extension in use on the `vifanord <http://vifanord.de/?id=16>`__
+and `Library of Anglo-American
+Culture <http://aac.sub.uni-goettingen.de/>`__ sites.
 
 
 Requirements
@@ -51,17 +48,16 @@ To use this extension successfully you need:
 TYPO3
 ~~~~~
 
--  TYPO3 ≥ 4.5.27
--  with Extbase/Fluid ≥ 1.3
--  at least jQuery 1.7.1 (compatible with jQuery ≥ 1.9) on your pages;
-   use the t3jquery extension for that
+-  TYPO3 ≥ 6.1.5
+-  the `t3jquery Extension <http://typo3.org/extensions/repository/view/t3jquery>`__
+   supplying at least jQuery 1.7.1 (compatible with jQuery ≥ 1.9) on your pages
 
    - when using autocomplete you need jQuery UI with the Autocomplete,
      Menu and Position modules
    - make sure you have the CSS for a jQuery UI theme included in your
      site to get a correct look
 
--  pazpar2 ≥ 1.6.2
+-  pazpar2 ≥ 1.6.39
 
    - The extension works pretty well with the metadata fields created by
      pazpar2’s tmarc.xsl. See the section `pazpar2 Setup <#pazpar2-setup>`__
@@ -71,8 +67,8 @@ pazpar2
 ~~~~~~~
 
 For searches to work and results to be displayed correctly with the
-*pazpar2* plug-in you need pazpar2 ≥ 1.6.2 available at a URL on your
-webserver (by default at the path /pazpar2/search.pz2, see `Index Data’s
+*pazpar2* plug-in you need pazpar2 ≥ 1.6.39 available at a URL on your
+web server (by default at the path ``/pazpar2/search.pz2``, see `Index Data’s
 instructions on how to proxy it
 there <http://www.indexdata.com/pazpar2/doc/installation.apache2proxy.html>`__).
 
@@ -84,9 +80,9 @@ pazpar2 Service Proxy
 ~~~~~~~~~~~~~~~~~~~~~
 
 For searches to work and results to be displayed correctly with the
-*pazpar2 Service Proxy* plug-in, you need pazpar2 ≥ 1.6.2 available
+*pazpar2 Service Proxy* plug-in, you need pazpar2 ≥ 1.6.39 available
 through Service Proxy at a URL on your webserver (by default at the path
-/service-proxy/ for the service itself and /service-proxy-auth for
+``/service-proxy`` for the service itself and ``/service-proxy-auth`` for
 authentication).
 
 pazpar2 Neuerwerbungen
@@ -110,9 +106,9 @@ need:
 
 -  if you want to provide RSS feeds for new acquisitions, a script
    accepting queries in the »q« parameter is expected at the path
-   /opac.atom. See the
+   ``/opac.atom``. See the
    `Opac-2-Atom <https://github.com/subugoe/Opac-2-Atom>`__ project for an
-   example script converting Göttingen’s Pica Opac output to Atom.
+   example script converting Göttingen’s Pica OPAC output to Atom.
 
 
 Setup
@@ -121,51 +117,53 @@ Setup
 Insert the pazpar2 [Neuerwerbungen\|Service Proxy] content element where
 you need it and make sure the pazpar2 Settings static include is added
 for the relevant pages. Looking at the `illustrated setup
-example <https://github.com/subugoe/typo3-pazpar2/blob/master/Documentation/Setup.md>`__
+example <https://github.com/ssp/typo3-pazpar2/blob/master/Documentation/Setup.md>`__
 may make this easier.
 
 Flex Form
 ~~~~~~~~~
 
 Flex Form configuration is available for the pazpar2 and pazpar2
-Neuerwerbungen content elements and offers the following options. The
-name of the corresponding TypoScript parameter is noted in [].
+Neuerwerbungen content elements and offers the following options.
+To fully configure the extension from TypoScript, use the ``flexformOverride``
+setting with the keys given in [] to override the value from the Flex Form.
 
--  pazpar2 service ID [``serviceID``\ ]: needs to be the name of a
+-  pazpar2 service ID [``serviceID``]: needs to be the name of a
    service set up on your pazpar2 server or empty if there is only a
    single unnamed service running
--  Google Books [``useGoogleBooks``\ ]: Choose whether the extension
+-  Google Books [``useGoogleBooks``]: Choose whether the extension
    should try to look up all records with ISBN and OCLC numbers on
    Google books once the full record is revealed and try to display the
    cover art and offer the book preview if possible. If this option is
    turned on, the plug-in will load and run a JavaScript from Google’s
    servers on the page the content element is inserted in.
--  Journals Online & Print [``useZDB``\ ]: Choose whether the extension
-   should try to look up all records with ISSN numbers using ZDB’s
-   Journals Online & Print (JOP) service. If this option is turned on,
-   the plug-in will load information about journal availability from the
-   ZDB Proxy on your server (see the next option) to display the
-   availability of the journal.
--  ZDB Proxy [``ZDBIP``\ ]: You can set up two distinct proxies for the
+-  Journals Online & Print [``useZDB``]: Choose whether the extension
+   should try to look up all records with ISSN numbers using `ZDB’s
+   Journals Online & Print (JOP)
+   service <http://www.zeitschriftendatenbank.de/services/journals-online-print/>`__.
+   If this option is turned on, the plug-in will load information about
+   journal availability from the ZDB Proxy on your server (see the next option)
+   to display the availability of the journal.
+-  ZDB Proxy [``ZDBIP``]: You can set up two distinct proxies for the
    ZDB JOP service if you plan to use it. The one available at the path
-   /zdb/ on your server should pass the user’s IP address to the ZDB JOP
+   ``/zdb/`` on your server should pass the user’s IP address to the ZDB JOP
    service, thus returning the journal availability for the user’s
-   current location. The one available at /zdb-local/ will do the lookup
+   current location. The one available at ``/zdb-local/`` will do the lookup
    for the server’s IP address – with the intention to provide
    availability information for the institution running the server. This
    option lets you pick which of the proxies will be used for the ZDB
-   JOP lookup. Either proxy configuration needs to contain the sid
+   JOP lookup. Either proxy configuration needs to contain the ``sid``
    parameter with your service name. [`Apache configuration file for
    setting up the
-   proxies <https://raw.github.com/subugoe/pazpar2-extras/master/fileadmin/apache/zdb.conf>`__\ ]
--  Histogram [``useHistogramForYearFacets``\ ]: The extension displays
+   proxies <https://raw.github.com/subugoe/vlibs-typo3/master/fileadmin/apache/zdb.conf>`__]
+-  Histogram [``useHistogramForYearFacets``]: The extension displays
    year facets if results from more than a few years are displayed.
    Choose whether the year facets should be displayed graphically using
    a histogram rather than as an (incomplete) list of year numbers in
    modern browsers. Activating this option will load the
    `flot <http://www.flotcharts.org/>`__ JavaScript library from your
    server on the relevant pages.
--  Subjects for pazpar2 Neuerwerbungen [``neuerwerbungen-subjects``\ ]:
+-  Subjects for pazpar2 Neuerwerbungen [``neuerwerbungen-subjects``]:
    A subject has to be picked in the popup menu if you want to use the
    pazpar2 Neuerwerbungen plug-in. The popup menu is populated using
    child elements of the PPN »NE« in the subject hierarchy of the nkwgok
@@ -179,150 +177,203 @@ additional options can be set using TypoScript in
 ``plugin.tx_pazpar2.settings``. The default value is noted inside []
 after the option name.
 
--  pazpar2 configuration:
 
-   -  ``pazpar2Path`` [/pazpar2/search.pz2]: absolute path to pazpar2
-      service on the web server
+pazpar2 configuration
+......................
 
--  Search form:
+- ``pazpar2Path`` [``/pazpar2/search.pz2``]: absolute path to pazpar2
+  service on the web server
 
-   -  ``showSearchForm`` [1]: if 1, the search form is shown in the
-      pazpar2 plug-in; turning off the search form still provides the
-      pazpar2 search and result display capabilities which you may want
-      to trigger from your own component
-   -  ``autcompleteURLs`` []: an array with keys: field names (e.g. all,
-      title, person) and values: URLs to which the search term can be
-      appended to create a query for an autocompletion list.
-   -  ``autocompleteSetupFunction`` []: name of a JavaScript
-      ``function (URL, fieldName)`` that is run when setting up the autocomplete
-      feature. Returns an object for configuring `jQuery UI’s autocomplete
-      widget <http://api.jqueryui.com/autocomplete/>`__.
-      Functions ``autocompleteSetupArray`` for sources that return JSON arrays
-      and ``autocompleteSolrSpellcheck`` for querying a Solr spellcheck
-      component are predefined.
-   -  ``allowExtendedSearch`` [1]: if 1, the link to show the extended
-      search form is displayed
-   -  ``fulltextSearch`` [0]: configure checkbox to do full text search
-      in the extended search form; 0 -> not shown, 1 -> labelled for
-      full text search, 2 -> labelled for table of contents search
-   -  ``journalTitleOnlySearch`` [0]: if 1, the checkbox to search
-      journal titles only is displayed in the extended search form
-   -  ``dateSearch`` [1]: if 1, the date field is displayed in the
-      extended search form
-   -  ``useSortMenu`` [0]: if 1 a HTML select element letting the user
-      pick the sort order is included in the search form
-   -  ``sortOrder`` [{1.fieldName = date 1.direction = descending}]: the
-      sort order to use; the array may have additional entries to
-      determine the sort order in the case of equality of the precedeing
-      criteria; The fieldNames must be set up in the pazpar2 service’s
-      metadata configuration. More complex example: {1.fieldName = date
-      1.direction = descending2.fieldName = author 2.direction =
-      ascending 3.fieldName = title 3.direction = ascending 4.fieldname
-      = title-number-section \` 4.direction = ascending}
-   -  ``triggeredByNKWGOK`` [0]: if 1, search will be triggered by
-      selections from subject hierarchies displayed by the nkwgok
-      extension (presumably useful for SUB Göttingen setup only)
-   -  Override localisations: Using
-      ``plugin.tx_pazpar2._LOCAL_LANG.[en|default]``, the strings used
-      in the search form can be overwritten; You can override the
-      strings in Resources/Private/Language/locallang.xml, as well as
-      those in the ``localisations`` object at the end of
-      Resources/Public/pz2-client/pz2-client.js and the objects
-      ``linkDescriptions``, ``mediaTypeNames``, ``catalogueNames`` (by
-      prefixing their keys with ``link-description-``, ``media-type-``
-      and ``catalogue-name-`` respectively. Example:
-      ``plugin.tx_pazpar2._LOCAL_LANG.en.link-description-Link = Go to Resource``.
 
--  Results display
+Search form
+...........
 
-   -  ``resultsPerPage`` [100]: number of results to display on each
-      page. Should be one of 10, 20, 50, 100 if you plan to let users
-      select the number
-   -  ``useMaps`` [1]: if 1, enables the display of Google Maps with
-      markers for areas covered by the record displayed
-   -  ``provideCOinSExport`` [1]: if 1, causes invisible
-      `COinS <http://ocoins.info/>`__ metadata to be inserted into the
-      result lists. It will be used by
-      `Zotero <http://www.zotero.org/>`__ to automatically find
-      bibliographic records displayed in the page. Note that Zotero 3 is
-      the first version capable of discovering COinS data that are
-      dynamically added to the page.
-   -  ``exportFormats`` [{ris = 0 bibtex = 0}]: an array with export
-      format names as keys. Set the value to 1/0 to enable/disable a
-      specific format. For active formats links to downloads of
-      bibliographic metadata are added to the detail view of records.
-      Permitted keys are: ``ris``, ``bibtex``, ``ris-inline`` and
-      ``bibtex-inline`` for
-      `RIS <http://www.refman.com/support/risformat_intro.asp>`__ and
-      BibTeX formats. The plain names cause a download of the file, the
-      ``-inline`` names replace the current page with the bibliographic
-      data.
-   -  ``showKVKLink`` [0]: for records with an ISBN or media type book a
-      link to the metasearch across German union catalogues in
-      `Karlsruhe Virtual
-      Catalogue <http://www.ubka.uni-karlsruhe.de/kvk.html>`__ (KVK) is
-      added along with the export links
-   -  ``useKeywords`` [0]: if 1, the Keywords search field is offered in
-      extended search and keywords are displayed in result details, each
-      linking to a search for the keyword in question; requires
-      pazpar2’s targets to be configured for keyword searches on the
-      »subject« index
-   -  ``termLists`` [{xtargets {maxFetch = 25 minDisplay = 1} medium
-      {maxFetch = 12 minDisplay = 1} language {maxFetch = 5 minDisplay =
-      1} filterDate {maxFetch = 10 minDisplay = 1}}]: Configuration
-      which facets will be displayed. Set up an array with the pazpar2
-      metadata field names as keys and arrays as values. The arrays
-      contain the key ``maxFetch`` with value the maximum number of
-      facet items to display and the key ``minDisplay`` with value the
-      minimum number of facets required for this facet to appear. The
-      ``filterDate`` facet used by default is generated automatically by
-      the script from the date field.
+- ``showSearchForm`` [``1``]: if 1, the search form is shown in the
+  pazpar2 plug-in; turning off the search form still provides the
+  pazpar2 search and result display capabilities which you may want
+  to trigger from your own component
+- ``allowExtendedSearch`` [``1``]: if ``1``, the link to show the extended
+  search form is displayed
+- ``fulltextSearch`` [``0``]: configure checkbox to do full text search
+  in the extended search form; ``0``: not shown, ``1``: labelled for
+  full text search, ``2``: labelled for table of contents search
+- ``journalTitleOnlySearch`` [``0``]: if ``1``, the checkbox to search
+  journal titles only is displayed in the extended search form
+- ``dateSearch`` [``1``]: if ``1``, the date field is displayed in the
+  extended search form
+- ``sortConfiguration`` [``{1{id=date default=1 order{1.fieldName=date
+  1.direction=descending 2.fieldName=author 2.direction=ascending}}``]: the
+  sort order to use; array entries: items for the sort order menu which
+  is hidden by the default CSS. Each item has an ``id`` and a ``order``
+  configuration. The configuration is a list of objects with keys
+  ``fieldName`` and ``direction``.
+- ``triggeredByNKWGOK`` [``0``]: if ``1``, search will be triggered by
+  selections from subject hierarchies displayed by the nkwgok
+  extension (presumably useful for SUB Göttingen setup only)
+- Override localisations of strings in the form using
+  ``plugin.tx_pazpar2._LOCAL_LANG.[en|default]``, the strings used
+  in the search form can be overwritten; You can override the
+  strings in ``Resources/Private/Language/locallang.xml``, as well as
+  those in the ``localisations`` object of `pz2-client
+  <https://github.com/ssp/pazpar2-js-client>`__.
 
--  included files:
 
-   -  ``CSSPath`` [EXT:pazpar2/Resources/Public/pz2-client/pz2.css]: CSS
-      file included to style the search form and search results
-   -  ``pz2JSPath`` [EXT:pazpar2/Resources/Public/pz2-client/pz2.js]:
-      Index Data’s
-      `pz2.js <http://git.indexdata.com/?p=pazpar2.git;a=blob_plain;f=js/pz2.js;hb=HEAD>`__
-      library to communicate with the pazar2 service
-   -  ``pz2-clientJSPath``
-      [EXT:pazpar2/Resources/Public/pz2-client/pz2-client.js]:
-      JavaScript handling the user interaction and display of results; a
-      lot of the customisation is in here
-   -  ``flotJSPath``
-      [EXT:pazpar2/Resources/Public/pz2-client/flot/jquery.flot.js]:
-      flot graphing library
-   -  ``flotSelectionJSPath``
-      [EXT:pazpar2/Resources/Public/pz2-client/flot/jquery.flot.selection.js]:
-      selection component of flot graphing library
+Results display
+...............
 
--  ``plugin.tx_pazpar2_pazpar2serviceproxy.settings``
+- ``resultsPerPage`` [``100``]: number of results to display on each
+  page. Should be one of ``10``, ``20``, ``50``, ``100`` if you plan to let users
+  select the number
 
-   -  ``serviceProxyAuthPath`` [/service-proxy-auth]: absolute path to
-      Service Proxy authentication on the web server
-   -  ``serviceProxyPath`` [/service-proxy/]: absolute path to Service
-      Proxy on the web server
-   -  ``pz2urlrecipeJSPath``
-      [EXT:pazpar2/Resources/Public/pz2-client/mk2.js]: JavaScript for
-      applying URL recipes
 
--  ``plugin.tx_pazpar2_pazpar2neuerwerbungen.settings``
+Facets
+......
 
-   -  ``useAtomFeed`` [1]: if 1, a link to an Atom feed is displayed
-      along with the Neuerwerbungen form and inserted into the page’s
-      ``<head>``
+- ``usePazpar2Facets`` [``0``]: if ``0``, create facets in the browser
+  (smoother to use, works well with small result sets); if ``1`` use
+  pazpar2’s own facets (preferable for large result sets)
+- ``termLists`` [``{xtargets{maxFetch=25 minDisplay=1} medium
+  {maxFetch=12 minDisplay=1} language{maxFetch=5 minDisplay=1}
+  filterDate{maxFetch=10 minDisplay=1}}``]: Configuration
+  which facets will be displayed. Set up an array with the pazpar2
+  metadata field names as keys and arrays as values. The arrays
+  contain the key ``maxFetch`` with value the maximum number of
+  facet items to display and the key ``minDisplay`` with value the
+  minimum number of facets required for this facet to appear. The
+  ``filterDate`` facet used by default is generated automatically by
+  the script when ``usePazpar2Facets`` is set to ``0`` – otherwise
+  use ``date`` instead
 
-   -  ``numberOfMonths`` [13]: the number of months to display in the
-      popup menu for date selection
-   -  ``pz2-neuerwerbungenCSSPath``
-      [EXT:pazpar2/Resources/Public/pz2-client/pz2-neuerwerbungen.css]:
-      Additional CSS file included if the pazpar2-neuerwerbungen plug-in
-      is used
-   -  ``pz2-neuerwerbungenJSPath``
-      [EXT:pazpar2/Resources/Public/pz2-client/pz2-neuerwerbungen.js]:
-      Additional JavaScript included if the pazpar2-neuerwerbungen
-      plug-in is used
+
+
+Detail display
+..............
+
+- ``useKeywords`` [``0``]: if ``1``, the ``subject`` search field is offered in
+  extended search and keywords are displayed in result details, each
+  linking to a search for the keyword in question; requires
+  pazpar2’s targets to be configured for keyword searches on the
+  ``subject`` index and including the ``subject`` field in brief format
+- ``useMaps`` [``1``]: if ``1``, enables the display of Google Maps with
+  markers for areas covered by the record displayed
+
+
+Detail display export options
+.............................
+
+- ``provideCOinSExport`` [``1``]: if ``1``, causes invisible
+  `COinS <http://ocoins.info/>`__ metadata to be inserted into the
+  result lists. It will be used by
+  `Zotero <http://www.zotero.org/>`__ to automatically find
+  bibliographic records displayed in the page. Note that Zotero 3 is
+  the first version capable of discovering COinS data that are
+  dynamically added to the page.
+- ``exportFormats`` [``{ris=0 bibtex=0}``]: an array with export
+  format names as keys. Set the value to 1/0 to enable/disable a
+  specific format. For active formats links to downloads of
+  bibliographic metadata are added to the detail view of records.
+  Permitted keys are: ``ris``, ``bibtex``, ``ris-inline`` and
+  ``bibtex-inline`` for
+  `RIS <http://www.refman.com/support/risformat_intro.asp>`__ and
+  BibTeX formats. The plain names cause a download of the file, the
+  ``-inline`` names replace the current page with the bibliographic
+  data.
+- ``showKVKLink`` [``0``]: if ``1``, for records with ISBN or media
+  type book a link to the metasearch across German union catalogues in
+  `Karlsruhe Virtual
+  Catalogue <http://www.ubka.uni-karlsruhe.de/kvk.html>`__ (KVK) is
+  added along with the export links
+- ``showOpenURLLink`` [``0``]: if ``1``, a link to an OpenURL resolver
+  is included with the export links; you can set its baseURL using the
+  ``openURLBaseURL`` key of the ``export`` localisation dictionary
+
+Autocompletion
+..............
+
+- ``autocompleteURLs`` []: an array with keys: field names (e.g. all,
+  title, person) and values: URLs to which the search term can be
+  appended to create a query for an autocompletion list.
+- ``autocompleteSetupFunction`` []: name of a JavaScript
+  ``function (URL, fieldName)`` that is run when setting up the autocomplete
+  feature. Returns an object for configuring `jQuery UI’s autocomplete
+  widget <http://api.jqueryui.com/autocomplete/>`__.
+  Functions ``pz2client.autocompleteSetupArray`` for sources that return
+  JSON arrays, ``pz2client.autocompleteSolrSpellcheck`` for querying a
+  Solr spellcheck component and ``pz2client.autocompleteSetupHistory``
+  for using recent search queries (see below) are predefined.
+
+
+Search History
+..............
+
+- ``historyItems`` [``99``]: Number of recent search queries to store when
+  local storage is available; set to ``0`` to deactivate
+- ``addHistoryLink`` [``0``]: if ``1``, add a link for showing the recent
+  search terms inside ``div.pz2-featureLinks`` at the beginning of ``#pazpar2``
+  (alternatively you can use ``pz2client.autocompleteSetupHistory`` as
+  ``autocompleteSetupFunction`` to expose recent search terms via autocompletion)
+
+
+Clipboard
+.........
+
+- ``useClipboard`` [``0``]: if ``1``, offer storing results in the clipboard
+  when local storage is available
+- ``addClipboardLink`` [``0``]: if ``1``, add a link for showing the clipboard
+  inside ``div.pz2-featureLinks`` at the beginning of ``#pazpar2``
+
+
+Highlighting
+............
+- ``highlightSearchTerms`` [``0``]: if ``1``, try to highlight the search terms
+  found in the results’ fields
+
+
+included files
+..............
+
+- ``CSSPath`` [``EXT:pazpar2/Resources/Public/pz2-client/pz2.css``]: CSS
+  file included to style the search form and search results
+- ``pz2-clientJSPath``
+  [``EXT:pazpar2/Resources/Public/pz2-client/pz2-client.min.js``]:
+  JavaScript handling the user interaction and display of results
+- ``flotJSPath``
+  [``EXT:pazpar2/Resources/Public/pz2-client/jquery.flot+selection.min.js``]:
+  `flot <http://www.flotcharts.org/>`__ graphing library with selection module
+- ``jquery-storageJSPath``
+  [``EXT:pazpar2/Resources/Public/pz2-client/jquery-storage/jquery.storageapi.min.js``]:
+  `jQuery Storage API  <https://github.com/julien-maurel/jQuery-Storage-API>`__ module
+
+
+``plugin.tx_pazpar2_pazpar2serviceproxy.settings``
+..................................................
+
+- ``serviceProxyAuthPath`` [``/service-proxy-auth``]: absolute path to
+  Service Proxy authentication on the web server
+- ``serviceProxyPath`` [``/service-proxy/``]: absolute path to Service
+  Proxy on the web server
+- ``pz2urlrecipeJSPath``
+  [``EXT:pazpar2/Resources/Public/pz2-client/mk2.js``]: JavaScript for
+  applying URL recipes
+
+
+``plugin.tx_pazpar2_pazpar2neuerwerbungen.settings``
+....................................................
+
+- ``useAtomFeed`` [``1``]: if 1, a link to an Atom feed is displayed
+  along with the Neuerwerbungen form and inserted into the page’s
+  ``<head>``
+- ``numberOfMonths`` [``13``]: the number of months to display in the
+  popup menu for date selection
+- ``pz2-neuerwerbungenCSSPath``
+  [``EXT:pazpar2/Resources/Public/pz2-client/pz2-neuerwerbungen.css``]:
+  Additional CSS file included if the pazpar2-neuerwerbungen plug-in
+  is used
+- ``pz2-neuerwerbungenJSPath``
+  [``EXT:pazpar2/Resources/Public/pz2-client/pz2-neuerwerbungen.js``]:
+  Additional JavaScript included if the pazpar2-neuerwerbungen
+  plug-in is used
+
 
 
 pazpar2 Setup
@@ -332,143 +383,169 @@ pazpar2 services used by the extension need to have specific settings
 for the search keys as well as for the metadata they provide for the
 searches to work and the quality of the displayed data to be reasonable.
 
+
 Search keys
 ~~~~~~~~~~~
 
-The search forms provided by pazpar2 use the following search keys which
+The search forms provided by the plug-ins use the following search keys which
 must be set up in the pazpar2 service:
 
 -  ``term`` - for default search
 -  ``fulltext`` - for fulltext/toc search (use same as term if not
-   available) [optional]
+   available) [if the ``fulltextSearch`` setting is ``1``]
 -  ``title``
--  ``journal`` - for journal title search [optional]
+-  ``journal`` - for journal title search [if the ``journalTitleOnlySearch``
+   setting is ``1``]
 -  ``person``
 -  ``date``
 -  ``nel`` - month index required by pazpar2 Neuerwerbungen only
    (required format: ``YYYYMM``)
--  ``subject`` [optional]
+-  ``subject`` [if the ``useKeywords`` setting is ``1``]
 
 Sorting
 ~~~~~~~
 
 The standard configuration requires the pazpar2 service to support
-sorting by the metadata fields ``date``. It can be reconfigured using
-the ``sortOrder`` TypoScript setting.
+sorting by the metadata fields ``date`` and ``author``. It can be
+reconfigured using the ``sortConfiguration`` TypoScript setting.
 
-For example – if you have those fields set up in your metadata
-configuration – you get better results by using ``date``, ``author``,
-``title``, ``title-number-section`` using the TypoScript setup:
+For example – if you want to offer a refined sorting by date, author
+and relevance and have the fields involved in this set up in your
+pazpar2 metadata configuration, you can use the TypoScript setup:
 
 ::
 
-        plugin.tx_pazpar2.settings.sortOrder {
-            1.fieldName = date
-            1.direction = descending
-            2.fieldName = author
-            2.direction = ascending
-            3.fieldName = title
-            3.direction = ascending
-            4.fieldName = title-number-section
-            4.direction = ascending
-        }
+	plugin.tx_pazpar2.settings.sortConfiguration {
+		1 {
+			id = date
+			default = 1
+			order {
+				1.fieldName = date
+				1.direction = descending
+				2.fieldName = author
+				2.direction = ascending
+				# 3.fieldName = title
+				# 3.direction = ascending
+				# 4.fieldName = title-number-section
+				# 4.direction = ascending
+			}
+		}
+		2 {
+			id = author
+			order {
+				1.fieldName = author
+				1.direction = ascending
+				2.fieldName = date
+				2.direction = descending
+			}
+		}
+		3 {
+			id = relevance
+			order {
+				1.fieldName = relevance
+				1.direction = descending
+				2.fieldName = date
+				2.direction = descending
+				3.fieldName = author
+				3.direction = ascending
+			}
+		}
+	}
+
 
 Metadata format
 ~~~~~~~~~~~~~~~
 
 The metadata expected by the extension to display results are based on
-the metadata fields created by Indexdata’s powerful
+the metadata fields created by Index Data’s powerful
 `tmarc.xsl <http://git.indexdata.com/?p=pazpar2.git;a=blob_plain;f=etc/tmarc.xsl;hb=HEAD>`__
-style file for extracting information from Marc records. A few additions
-and changes to the standard output of that stylesheet have been made to
-improve the display quality.
+stylesheet for extracting information from MARC records. In particular we
+are using a `slightly extended version of tmarc.xsl <https://github.com/ssp/pazpar2-etc/blob/master/tmarc.xsl>`__ to
+improve the display quality even further.
 
 Fields used to display data if present:
 
--  id
--  medium
--  title
--  title-remainder
--  title-number-section
--  title-responsibility
--  date
--  multivolume-title (not part of standard tmarc.xsl)
--  series-title
--  author
--  other-person (not part of standard tmarc.xsl)
--  journal-title
--  journal-subpart
--  volume-number
--  issue-number
--  pages-number
--  isbn
--  issn
--  pissn (not part of standard tmarc.xsl)
--  eissn (not part of standard tmarc.xsl)
--  oclc-number
--  zdb-number
--  doi (not part of standard tmarc.xsl)
--  electronic-url
--  edition
--  publication-name
--  publication-place
--  physical-extent
--  description
--  language - ISO 639-2/B language code (not part of standard
-   tmarc.xsl), German and English language names are included in the
-   JavaScript
--  abstract (not part of standard tmarc.xsl)
--  creator (used for Guide links)
--  catalogue-url (URL linking to the catalogue web page for that record,
-   built using the stylesheets and setup for the various targets.)
--  parent-catalogue-url (URL linking to the catalogue web page for
-   related records to the current record, typically the containing
-   parent collection.)
--  subject
--  classification-msc (not part of standard tmarc.xsl)
--  mapscale (not part of standard tmarc.xsl), display the scale of maps
-   and potentially draw the region covered by the map on an interactive
-   map on the web page
--  country (not part of standard tmarc.xsl, used for Guide records)
--  source-type (not part of standard tmarc.xsl, used for Guide records)
+- ``id``
+- ``medium``
+- ``title``
+- ``title-remainder``
+- ``title-number-section``
+- ``title-responsibility``
+- ``date``
+- ``multivolume-title`` (not part of standard tmarc.xsl)
+- ``series-title``
+- ``author``
+- ``other-person`` (not part of standard tmarc.xsl)
+- ``corporate`` (not part of standard tmarc.xsl)
+- ``meeting`` (not part of standard tmarc.xsl)
+- ``journal-title``
+- ``journal-subpart``
+- ``volume-number``
+- ``issue-number``
+- ``pages-number``
+- ``isbn``
+- ``issn``
+- ``pissn`` (not part of standard tmarc.xsl)
+- ``eissn`` (not part of standard tmarc.xsl)
+- ``oclc-number``
+- ``zdb-number``
+- ``doi`` (not part of standard tmarc.xsl)
+- ``electronic-url``
+- ``edition``
+- ``publication-name``
+- ``publication-place``
+- ``physical-extent``
+- ``description``
+- ``language`` - ISO 639-2/B language code (not part of standard
+  tmarc.xsl), German and English language names are included in the
+  JavaScript
+- ``abstract`` (not part of standard tmarc.xsl)
+- ``catalogue-url`` (URL linking to the catalogue web page for that record,
+  built using the stylesheets and setup for the various targets.)
+- ``parent-catalogue-url`` (URL linking to the catalogue web page for
+  related records to the current record, typically the containing
+  parent collection.)
+- ``subject``
+- ``classification-msc`` (not part of standard tmarc.xsl)
+- ``mapscale`` (not part of standard tmarc.xsl), display the scale of maps
+  and potentially draw the region covered by the map on an interactive
+  map on the web page
+- ``creator`` (used for Guide records)
+- ``country`` (not part of standard tmarc.xsl, used for Guide records)
+- ``source-type`` (not part of standard tmarc.xsl, used for Guide records)
 
-For the 'medium' field, the supported types (with a localised name and
+For the ``medium`` field, the supported types (with a localised name and
 icon) are. Most of them come from standard tmarc.xsl analysis of MARC
 records. A few depend on our refinements of tmarc.xsl and additional
 information/analysis.
 
--  article
--  audio-visual (may require tmarc.xsl output to be stripped of more
-   specific media type information like dvd)
--  book
--  data (not part of tmarc.xsl)
--  electronic
--  image (not part of tmarc.xsl)
--  journal
--  letter (not part of tmarc.xsl)
--  manuscript (changed tmarc.xsl to recognise these)
--  map
--  microform
--  music-score
--  multivolume (extended tmarc.xsl to recognise these)
--  newspaper
--  recording
--  website (used for websites as found in SUB’s SSG-FI Guides, not
-   coming from tmarc.xsl)
--  multiple (used for merged records of varying media types as well as
-   mixed-media items)
+- ``article``
+- ``audio-visual`` (may require tmarc.xsl output to be stripped of more
+  specific media type information like dvd)
+- ``book``
+- ``data`` (not part of tmarc.xsl)
+- ``electronic``
+- ``image`` (not part of tmarc.xsl)
+- ``journal``
+- ``letter`` (not part of tmarc.xsl)
+- ``manuscript`` (changed tmarc.xsl to recognise these)
+- ``map``
+- ``microform``
+- ``music-score``
+- ``multivolume`` (extended tmarc.xsl to recognise these)
+- ``newspaper``
+- ``recording``
+- ``website`` (used for websites as found in SUB’s SSG-FI Guides, not
+  coming from tmarc.xsl)
+- ``multiple`` (used for merged records of varying media types as well as
+  mixed-media items)
 
 To get a better idea of the general setup, take a look at `our setup
-files <https://github.com/subugoe/pazpar2-SUB>`__, particularly the `AAC
-service <https://github.com/subugoe/pazpar2-SUB/blob/master/services/AAC.xml>`__
-and the `gbv-sru-neu
-target <https://github.com/subugoe/pazpar2-SUB/blob/master/settings/gbv-sru-neu.xml>`__.
-Some of `our
-stylesheets <https://github.com/subugoe/pazpar2-SUB/tree/master/xsl>`__ may
-be helpful as well, particularly those for `ISO 639-2
-cleaning <https://raw.github.com/subugoe/pazpar2-SUB/master/xsl/language-code-cleaner.xsl>`__
-and `ISO 639-1 to 639-2/B
-conversion <https://raw.github.com/subugoe/pazpar2-SUB/master/xsl/iso-639-1-to-639-2b.xsl>`__.
+files <https://github.com/ssp/pazpar2-config>`__, particularly the `AAC
+service <https://github.com/ssp/pazpar2-config/blob/master/services/SUB/AAC.xml>`__
+and the `gbv-sru
+target <https://github.com/ssp/pazpar2-config/blob/master/settings/gbv-sru.xml>`__.
+
 
 
 Bibliographic data export
@@ -476,10 +553,10 @@ Bibliographic data export
 
 To create proper downloads these are created in a slightly involved way
 by sending the pazpar2 metadata back to server where the script
-Resources/Public/pz2-client/converter/convert-pazpar2-record.php is run.
+``Resources/Public/pz2-client/converter/convert-pazpar2-record.php`` is run.
 
 Conversions done by that script use the stylesheets in
-Resources/Public/pz2-client/converter. The conversion quality achieved
+``Resources/Public/pz2-client/converter``. The conversion quality achieved
 by those scripts is somewhat limited on a syntactic level due to the
 inadequacies (RIS is defined to be
 `non-Unicode <http://www.refman.com/support/risformat_fields_02.asp>`__
@@ -490,36 +567,70 @@ TeX code which benefits from not being escaped] so the lazy compromise
 is to send UTF-8 as well).
 
 Support for additional formats can be added to the extension by adding
-an XSL file to the Resources/Public/pz2-client/converter folder,
+an XSL file to the ``Resources/Public/pz2-client/converter`` folder,
 registering it for a format name in the Array the beginning of
-Resources/Public/pz2-client/converter/convert-pazpar2-record.php and
-adding the display strings for that format to
-Resources/Public/pz2-client/pz2-client.js as well as to
-Resources/Private/Language/locallang.xml
+``Resources/Public/pz2-client/converter/convert-pazpar2-record.php`` and
+adding the display strings for that format to the localisation.
+
+
+Pazpar2 result export
+---------------------
+
+The extension can provide the full set of records retrieved from the pazpar2
+service for the query. To retrieve it, use the following URL parameters in
+addition to those for the query:
+
+- ``tx_pazpar2_pazpar2[useJS]:no`` - force PHP to run the pazpar2 query
+- ``tx_pazpar2_pazpar2[maximumResults]:10000`` - set the number of results you
+  want to retrieve; for large result sets beware of PHP running out of memory
+- ``tx_pazpar2_pazpar2[format]:json`` - JSON output
+- ``type:1393975639`` - page type without template and ``application/json`` MIME-Type
+
+The resulting JSON object has two keys:
+
+- ``results`` - an object of the pazpar2 results
+  * keys: pazpar2 merge keys
+  * values: pazpar2 records as converted to arrays by TYPO3’s ``xml2array`` function
+- ``stat`` - the last pazpar2 stat reply (to make errors available to the consumer)
 
 
 Acknowledgements
 ----------------
 
-Many thanks go to `Index Data <http://www.indexdata.com/>`__ for their
-powerful pazpar2 software and quick bug fixes, to my colleague Ingo
-Pfennigstorf for his TYPO3 expertise and to `Henrik
-Cederblad <http://cederbladdesign.com/>`__ who created the `media type
-icons <https://github.com/subugoe/sub-iconfont>`__.
+- originally created 2010-2013 for `SUB Göttingen <http://www.sub.uni-goettingen.de>`__,
+  many thanks to Ingo Pfennigstorf for his TYPO3 help
+- with Service Proxy improvements 2013 for `Index Data <http://indexdata.com/>`__
+- with improvements 2014 for `vifanord <http://vifanord.de/>`__
+- includes media type icons by `Henrik Cederblad <http://cederbladdesign.com/>`__
 
 
 TODO
 ----
 
--  WAI-ARIA support
--  investigate using pazpar2’s faceting again (following the latest
-   improvements)
--  HTML5 History support?
+- WAI-ARIA support
+- HTML5 History support?
 
 
 Version History
 ---------------
 
+5.0.0 (2014-03-05)
+	* **Require TYPO3 6.1**
+	* **Require t3jquery**
+	* **Change certain aspects of the configuration (localisation, sort)
+	  and setup that will require users with customisations to review those**
+	* **Make use of localisation for target names obligatory**
+	* pz2-client:
+		* Complete restructuring
+		* Re-introduce ability to use pazpar2’s native facets
+		* Add Clipboard
+		* Add Search History
+		* Add Search Term Highlighting
+		* Add Open URL link in detail view
+	* Re-work sort order configuration
+	* Display ``corporate`` and ``meeting`` fields
+	* Add ``settings.flexformOverride`` to configure without the Flex Form
+	* Add JSON/XML output of all search results
 4.0.4 (2013-10-25)
 	* Readme fixes
 4.0.3b (2013-09-26)
@@ -646,7 +757,7 @@ License
 
 MIT License to keep the people happy who need it.
 
-Copyright (C) 2010-2013 by Sven-S. Porst
+Copyright (C) 2010-2014 by Sven-S. Porst
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the

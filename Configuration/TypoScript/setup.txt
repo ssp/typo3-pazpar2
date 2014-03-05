@@ -1,31 +1,22 @@
 plugin.tx_pazpar2 {
 	settings {
 		# exposed through flexform
+		# can be overriden using the flexformOverride dictionary with these keys
 		serviceID =
-		useHistogramForYearFacets = 1
 		useGoogleBooks = 1
-		useMaps = 1
 		useZDB = 1
 		ZDBIP = 0
+		useHistogramForYearFacets = 1
 
 		# only settable via TypoScript
 		pazpar2Path = /pazpar2/search.pz2
 
-		siteName =
-		provideCOinSExport = 1
-		showExportLinksForEachLocation = 0
-		exportFormats {
-			ris = 0
-			bibtex = 0
-		}
-		showKVKLink = 0
-		showOpenURLLink = 0
-
-		CSSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2.css
-		pz2-clientJSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2-client.min.js
-		flotJSPath = EXT:pazpar2/Resources/Public/pz2-client/flot/jquery.flot.js
-		flotSelectionJSPath = EXT:pazpar2/Resources/Public/pz2-client/flot/jquery.flot.selection.js
-		jquery-storageJSPath = EXT:pazpar2/Resources/Public/pz2-client/jquery-storage/jquery.storageapi.min.js
+		# search form
+		showSearchForm = 1
+		allowExtendedSearch = 1
+		fulltextSearch = 0
+		journalTitleOnlySearch = 0
+		dateSearch = 1
 
 		sortConfiguration {
 			1 {
@@ -64,6 +55,10 @@ plugin.tx_pazpar2 {
 			#}
 		}
 
+		# results display
+		resultsPerPage = 100
+
+		# facets
 		usePazpar2Facets = 0
 
 		termLists {
@@ -85,16 +80,22 @@ plugin.tx_pazpar2 {
 			}
 		}
 
-		triggeredByNKWGOK = 0
-		showSearchForm = 1
-		allowExtendedSearch = 1
-		fulltextSearch = 0
-		journalTitleOnlySearch = 0
-		dateSearch = 1
+		# detail display
 		useKeywords = 0
+		useMaps = 1
 
-		resultsPerPage = 100
+		# detail display export options
+		exportFormats {
+			ris = 0
+			bibtex = 0
+		}
+		showExportLinksForEachLocation = 0
+		siteName =
+		provideCOinSExport = 1
+		showKVKLink = 0
+		showOpenURLLink = 0
 
+		# autocompletion
 		autocompleteURLs {
 			# all = /api/autocomplete/all?query=
 			# title = /api/autocomplete/title?query=
@@ -103,12 +104,25 @@ plugin.tx_pazpar2 {
 		}
 		autocompleteSetupFunction =
 
+		# search history
 		historyItems = 99
 		addHistoryLink = 0
+
+		# clipboard
 		useClipboard = 0
 		addClipboardLink = 0
 
+		# highlighting
 		highlightSearchTerms = 0
+
+		CSSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2.css
+		pz2-clientJSPath = EXT:pazpar2/Resources/Public/pz2-client/pz2-client.min.js
+		flotJSPath = EXT:pazpar2/Resources/Public/pz2-client/jquery.flot+selection.min.js
+		jquery-storageJSPath = EXT:pazpar2/Resources/Public/pz2-client/jquery-storage/jquery.storageapi.min.js
+
+
+		# for subject menu searches together with the nkwgok subject tree plugin (SUB Göttingen)
+		triggeredByNKWGOK = 0
 	}
 }
 
