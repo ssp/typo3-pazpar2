@@ -248,24 +248,25 @@ private function titleInfo ($result) {
  */
 private function authorInfo ($result) {
 	$outputElement = Null;
-
+	xdebug_break();
 	if ($result['md-title-responsibility'][0]['values']) {
 		$outputText = implode('; ', $result['md-title-responsibility'][0]['values']);
-		if (!$outputText && $result['md-author']) {
-			$authors = Array();
-			foreach ($result['md-author'] as $index => $author) {
-				if ($index < MAX_AUTHORS) {
-					$authorName = $author['values'][0];
-					$authors[] = $authorName;
-				}
-				else {
-					$authors[] = Tx_Extbase_Utility_Localization::translate('et al.', 'Pazpar2');
-					break;
-				}
+	}
+	
+	if (!$outputText && $result['md-author']) {
+		$authors = Array();
+		foreach ($result['md-author'] as $index => $author) {
+			if ($index < MAX_AUTHORS) {
+				$authorName = $author['values'][0];
+				$authors[] = $authorName;
 			}
-
-			$outputText = implode('; ', $authors);
+			else {
+				$authors[] = Tx_Extbase_Utility_Localization::translate('et al.', 'Pazpar2');
+				break;
+			}
 		}
+
+		$outputText = implode('; ', $authors);
 	}
 
 	if ($outputText) {
@@ -423,18 +424,20 @@ private function appendCOinSSpansToContainer ($result, $container) {
  */
 private function cleanFieldBasedOnString (&$result, $fieldName, $stringToMatch, $surnameOnly) {
 	$mdFieldName = 'md-' . $fieldName;
-	$mdCleanFieldName = $fieldName . '-clean';
+	$mdCleanFieldName = $mdFieldName . '-clean';
 	$result[$mdCleanFieldName] = array();
 
-	foreach($result[$mdFieldName] as $item) {
-		$itemToFind = $item;
-		if ($surnameOnly) {
-			$itemParts = explode(',', $itemToFind);
-			$itemToFind = trim($itemParts[0]);
-		}
+	if ($result[$mdFieldName]) {
+		foreach($result[$mdFieldName] as $item) {
+			$itemToFind = $item['values'][0];
+			if ($surnameOnly) {
+				$itemParts = explode(',', $itemToFind);
+				$itemToFind = trim($itemParts[0]);
+			}
 
-		if (strpos($stringToMatch, $item) === FALSE) {
-			$result[$mdCleanFieldName][] = $item;
+			if (strpos($stringToMatch, $itemToFind) === FALSE) {
+				$result[$mdCleanFieldName][] = $item;
+			}
 		}
 	}
 }
@@ -458,14 +461,22 @@ private function renderDetails ($result) {
 	/**
 	 * Somewhat sloppy heuristic for creating cleaned up lists.
 	 */
+	$fieldsToClean = array('author' => TRUE, 'other-person' => TRUE, 'meeting' => FALSE, 'corporate' => FALSE);
+	foreach ($fieldsToClean as $fieldName => $surnameOnly) {
+		if ($result['md-' . $fieldName]) {
+			$result['md-' . $fieldName . '-clean'] = ($result['md-' . $fieldName]);
+		}
+	}
+
 	$allResponsibility = '';
 	if ($result['md-title-responsibility']) {
-		$allResponsibility = implode ('; ', $result['md-title-responsibility']);
+		$allResponsibility = implode('; ', $result['md-title-responsibility'][0]['values']);
 
-		$this->cleanFieldBasedOnString($result, 'author', $allResponsibility, TRUE);
-		$this->cleanFieldBasedOnString($result, 'other-person', $allResponsibility, TRUE);
-		$this->cleanFieldBasedOnString($result, 'meeting', $allResponsibility, FALSE);
-		$this->cleanFieldBasedOnString($result, 'corporate', $allResponsibility, FALSE);
+		foreach ($fieldsToClean as $fieldName => $surnameOnly) {
+			if ($result['md-' . $fieldName]) {
+				$this->cleanFieldBasedOnString($result, $fieldName, $allResponsibility, $surnameOnly);
+			}
+		}
 	}
 	else if (array_key_exists('md-author', $result) && count($result['md-author']) > MAX_AUTHORS) {
 		$result['md-author-clean'] = array_slice($result['md-author'], MAX_AUTHORS);
