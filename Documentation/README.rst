@@ -614,19 +614,19 @@ TODO
 Version History
 ---------------
 
-5.0.0 (2014-03-05)
+5.0.0 (2014-03-06)
 	* **Require TYPO3 6.1**
 	* **Require t3jquery**
 	* **Change certain aspects of the configuration (localisation, sort)
 	  and setup that will require users with customisations to review those**
 	* **Make use of localisation for target names obligatory**
 	* pz2-client:
-		* Complete restructuring
-		* Re-introduce ability to use pazpar2’s native facets
-		* Add Clipboard
-		* Add Search History
-		* Add Search Term Highlighting
-		* Add Open URL link in detail view
+		- Complete restructuring
+		- Re-introduce ability to use pazpar2’s native facets
+		- Add Clipboard
+		- Add Search History
+		- Add Search Term Highlighting
+		- Add Open URL link in detail view
 	* Re-work sort order configuration
 	* Display ``corporate`` and ``meeting`` fields
 	* Add ``settings.flexformOverride`` to configure without the Flex Form
