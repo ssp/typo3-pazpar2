@@ -614,6 +614,8 @@ TODO
 Version History
 ---------------
 
+5.0.1 (2014-03-07)
+	* improve compatibility with old / weirdly configured IE versions
 5.0.0 (2014-03-06)
 	* **Require TYPO3 6.1**
 	* **Require t3jquery**
