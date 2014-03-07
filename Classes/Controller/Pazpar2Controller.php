@@ -80,7 +80,7 @@ class Tx_Pazpar2_Controller_Pazpar2Controller extends Tx_Extbase_MVC_Controller_
 			// Transfer settings to conf
 			$this->conf[$key] = $value;
 			
-			if (strpos($key, 'Path') !== False) {
+			if (strpos($key, 'Path') !== FALSE) {
 				// Let TYPO3 try to process path settings as a path, so we can
 				// use EXT: in the paths.
 				$processedPath = $GLOBALS['TSFE']->tmpl->getFileName($value);

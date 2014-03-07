@@ -42,18 +42,18 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	/**
 	 * Search query parts.
 	 * 
-	 * @var string|Null
+	 * @var string|NULL
 	 */
-	protected $queryString = Null;
-	protected $querySwitchFulltext = Null;
-	protected $queryStringTitle = Null;
-	protected $querySwitchJournalOnly = Null;
-	protected $queryStringPerson = Null;
-	protected $queryStringKeyword = Null;
-	protected $queryStringDate = Null;
+	protected $queryString = NULL;
+	protected $querySwitchFulltext = NULL;
+	protected $queryStringTitle = NULL;
+	protected $querySwitchJournalOnly = NULL;
+	protected $queryStringPerson = NULL;
+	protected $queryStringKeyword = NULL;
+	protected $queryStringDate = NULL;
 
 	/**
-	 * @return string|Null
+	 * @return string|NULL
 	 */
 	public function getQueryString () { return $this->queryString; }
 	public function getQuerySwitchFulltext () { return $this->querySwitchFulltext; }
@@ -154,9 +154,9 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	/**
 	 * Service name to run the query on.
 	 *
-	 * @var string|Null
+	 * @var string|NULL
 	 */
-	protected $serviceName = Null;
+	protected $serviceName = NULL;
 
 	/**
 	 * @return string
@@ -179,12 +179,12 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	 * Name of the institution proving database access (as determined by
 	 * the pazpar2-access.php proxy service).
 	 *
-	 * @var string|Null $institutionName
+	 * @var string|NULL $institutionName
 	 */
-	protected $institutionName = Null;
+	protected $institutionName = NULL;
 
 	/**
-	 * @return string|Null
+	 * @return string|NULL
 	 */
 	protected function getInstitutionName () {
 		return $this->institutionName;
@@ -200,11 +200,11 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 
 
 	/**
-	 * False by default, True when the Query finished running.
+	 * FALSE by default, TRUE when the Query finished running.
 	 *
 	 * @var Boolean
 	 */
-	protected $didRun = False;
+	protected $didRun = FALSE;
 
 	/**
 	 * @return Boolean
@@ -226,12 +226,12 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	 * Indicates whether all targets in the service are active (as determined
 	 * by the pazpar2-access.php proxy service).
 	 *
-	 * @var Boolean|Null
+	 * @var Boolean|NULL
 	 */
 	protected $allTargetsActive;
 
 	/**
-	 * @return Boolean|Null
+	 * @return Boolean|NULL
 	 */
 	public function getAllTargetsActive () {
 		return $this->allTargetsActive;
@@ -249,7 +249,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	/**
 	 * URL of the pazpar2 service used.
 	 * 
-	 * @var string|Null
+	 * @var string|NULL
 	 */
 	protected $pazpar2BaseURL;
 
@@ -270,7 +270,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	/**
 	 * Setter for pazpar2BaseURL variable.
 	 * 
-	 * @param string|Null $newPazpar2BaseURL
+	 * @param string|NULL $newPazpar2BaseURL
 	 * @return void
 	 */
 	public function setPazpar2BaseURL ($newPazpar2BaseURL) {
@@ -430,7 +430,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	 */
 	protected function pazpar2InitURL () {
 		$URL = $this->getPazpar2BaseURL() . '?command=init';
-		if ($this->getServiceName() != Null) {
+		if ($this->getServiceName() != NULL) {
 			$URL .= '&service=' . urlencode($this->getServiceName());
 		}
 
@@ -541,7 +541,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 			if ($searchReply) {
 				$status = $searchReply['status'];
 				if ($status === 'OK') {
-					$this->queryIsRunning = True;
+					$this->queryIsRunning = TRUE;
 				}
 				else {
 					t3lib_div::devLog('pazpar2 search command status is not "OK" but "' . $status . '"', 'pazpar2', 3);
@@ -560,10 +560,10 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 	 * Requires a session to be established.
 	 *
 	 * @param int $count return by reference the current number of results
-	 * @return boolean True when query has finished, False otherwise
+	 * @return boolean TRUE when query has finished, FALSE otherwise
 	 */
 	protected function queryIsDone () {
-		$result = False;
+		$result = FALSE;
 
 		$statReplyString = $this->fetchURL($this->pazpar2StatURL());
 		$this->latestStatReply = t3lib_div::xml2array($statReplyString);
@@ -574,9 +574,9 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 			// Casting it to int gives 0 as long as the value is < 1.
 			$progress = (int)$this->latestStatReply['progress'];
 			$result = ($progress === 1);
-			if ($result === True) {
+			if ($result === TRUE) {
 				// We are done: note that and get the record count.
-				$this->setDidRun(True);
+				$this->setDidRun(TRUE);
 				$this->setTotalResultCount($this->latestStatReply['hits']);
 			}
 		}
@@ -673,7 +673,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 			if ($showReply) {
 				$status = $showReply['status'][0]['values'][0];
 				if ($status == 'OK') {
-					$this->queryIsRunning = False;
+					$this->queryIsRunning = FALSE;
 					$hits = $showReply['hit'];
 
 					if ($hits) {

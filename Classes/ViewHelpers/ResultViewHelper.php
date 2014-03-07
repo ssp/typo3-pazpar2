@@ -2,7 +2,7 @@
 /*******************************************************************************
  * Copyright notice
  *
- * Copyright (C) 2011-2012 by Sven-S. Porst
+ * Copyright (C) 2011-2014 by Sven-S. Porst <ssp-web@earthlingsoft.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -73,8 +73,8 @@ private $conf;
  */
 public function initializeArguments() {
 	parent::initializeArguments();
-	$this->registerArgument('result', 'array', 'The pazpar2 result to render', true);
-	$this->registerArgument('conf', 'array', 'Configuration array', true);
+	$this->registerArgument('result', 'array', 'The pazpar2 result to render', TRUE);
+	$this->registerArgument('conf', 'array', 'Configuration array', TRUE);
 }
 
 
@@ -143,7 +143,7 @@ public function render () {
  */
 private function appendInfoToContainer ($info, $container) {
 	if ($info && $container) {
-		if (is_array($info) == False) {
+		if (is_array($info) == FALSE) {
 			$container->appendChild($info);
 		}
 		else {
@@ -190,7 +190,7 @@ private function turnIntoNewWindowLink ($link) {
  * @return DOMElement
  */
 private function appendMarkupForFieldToContainer ($fieldName, $result, $container, $prepend='', $append='') {
-	$span = Null;
+	$span = NULL;
 	$fieldContent = $result['md-' . $fieldName][0]['values'][0];
 
 	if ($fieldContent && $container) {
@@ -247,7 +247,7 @@ private function titleInfo ($result) {
  * @return DOMElement
  */
 private function authorInfo ($result) {
-	$outputElement = Null;
+	$outputElement = NULL;
 	xdebug_break();
 	if ($result['md-title-responsibility'][0]['values']) {
 		$outputText = implode('; ', $result['md-title-responsibility'][0]['values']);
@@ -295,7 +295,7 @@ private function journalInfo ($result) {
 		$journalTitle->appendChild($this->doc->createTextNode('.'));
 	}
 	else {
-		$outputElement = Null;
+		$outputElement = NULL;
 	}
 
 	return $outputElement;
@@ -510,10 +510,10 @@ private function renderDetails ($result) {
 /**
  * @param string $title
  * @param array $result
- * @return Null|array of DT/DD DOMElements
+ * @return NULL|array of DT/DD DOMElements
  */
 private function detailLineAuto ($title, $result) {
-	$line = Null;
+	$line = NULL;
 	$element = $this->DOMElementForTitle($title, $result);
 
 	if ($element) {
@@ -528,13 +528,13 @@ private function detailLineAuto ($title, $result) {
 /**
  * @param string $title
  * @param array $informationElements (DOM Elements)
- * @return Null|array of DT/DD DOMElements
+ * @return NULL|array of DT/DD DOMElements
  */
 private function detailLine ($title, $informationElements) {
-	$line = Null;
+	$line = NULL;
 
 	if ($informationElements && $title) {
-		$headingText = Null;
+		$headingText = NULL;
 
 		if (count($informationElements) == 1) {
 			$headingText = Tx_Extbase_Utility_Localization::translate('detail-label-' . $title, 'Pazpar2');
@@ -583,7 +583,7 @@ private function detailLine ($title, $informationElements) {
  * @return array
  */
 private function markupInfoItems ($infoItems) {
-	$result = Null;
+	$result = NULL;
 
 	if (count($infoItems) == 1) {
 		$result = $infoItems[0];
@@ -648,11 +648,11 @@ private function locationDetails ($result) {
  * @return NULL|DOMElement
  */
 private function detailInfoItem ($fieldName, $location) {
-	$infoItem = Null;
+	$infoItem = NULL;
 	$value = $location['md-' . $fieldName];
 
 	if ($value) {
-		$label = Null;
+		$label = NULL;
 		$labelID = 'detail-label-' + $fieldName;
 		$localisedLabelString = Tx_Extbase_Utility_Localization::translate($labelID, 'Pazpar2');
 
@@ -680,10 +680,10 @@ private function detailInfoItem ($fieldName, $location) {
  * @param string $fieldContent
  * @param string $labelName
  * @param boolean $dontTerminate
- * @return Null|DOMElement
+ * @return NULL|DOMElement
  */
-private function detailInfoItemWithLabel($fieldContent, $labelName, $dontTerminate = False) {
-	$infoSpan = Null;
+private function detailInfoItemWithLabel($fieldContent, $labelName, $dontTerminate = FALSE) {
+	$infoSpan = NULL;
 	if ($fieldContent) {
 		$infoSpan = $this->doc->createElement('span');
 		$infoSpan->setAttribute('class', 'pz2-info');
@@ -755,15 +755,15 @@ private function cleanURLList ($location, $result) {
 					if (!$URLInfo['attrs'] && $remainingURLInfo['attrs']) {
 						$URLIndexToRemove = $URLIndex;
 					}
-					$indexesToRemove[$URLIndexToRemove] = true;
+					$indexesToRemove[$URLIndexToRemove] = TRUE;
 				}
 			}
 			// Check for duplicates among the DOIs.
 			$DOIs = $result['md-doi'];
 			if ($DOIs) {
 				foreach ($DOIs as $DOI) {
-					if (strpos($DOI['values'][0], $URL) !== False) {
-						$indexesToRemove[$URLIndexToRemove] = true;
+					if (strpos($DOI['values'][0], $URL) !== FALSE) {
+						$indexesToRemove[$URLIndexToRemove] = TRUE;
 						break;
 					}
 				}
@@ -792,7 +792,7 @@ private function cleanURLList ($location, $result) {
  */
 private function electronicURLs ($location, $result) {
 	$electronicURLs = $this->cleanURLList($location, $result);
-	$URLsContainer = Null;
+	$URLsContainer = NULL;
 
 	if ($electronicURLs && count($electronicURLs) != 0) {
 		$URLsContainer = $this->doc->createElement('span');
@@ -896,7 +896,7 @@ private function catalogueLink ($locationAll) {
 		/* Try to localise catalogue name, fall back to original target name
 			if no localisation is available */
 		$linkText = Tx_Extbase_Utility_Localization::translate('catalogue-name-' . $targetName, 'Pazpar2');
-		if ($linkText === Null) {
+		if ($linkText === NULL) {
 			$linkText = $targetName;
 		}
 		$linkElement->appendChild($this->doc->createTextNode($linkText));
@@ -929,7 +929,7 @@ private function ISSNsDetailLine ($result) {
 		}
 	}
 	
-	$infoElements = Null;
+	$infoElements = NULL;
 	if (count($ISSNList) > 0) {
 		$infoElements = Array( $this->doc->createTextNode(implode(', ', $ISSNList)) );
 	}
@@ -944,7 +944,7 @@ private function ISSNsDetailLine ($result) {
  * @return array of DOM Elements
  */
 private function keywordsDetailLine ($result) {
-	$infoElements = Null;
+	$infoElements = NULL;
 	$labelString = 'keyword';
 
 	if ($result['md-subject'] && $this->conf['useKeywords']) {
@@ -995,7 +995,7 @@ private function keywordsDetailLine ($result) {
  * @return array of DOM Elements
  */
 private function MSCDetailLine ($result) {
-	$infoElements = Null;
+	$infoElements = NULL;
 	$MSCInfo = Array();
 	$notes = Array();
 
@@ -1110,7 +1110,7 @@ private function appendExportItemsTo ($locations, $labelFormat, $container) {
  */
 private function exportItem ($locations, $exportFormat, $labelFormat) {
 	$form = $this->dataConversionForm($locations, $exportFormat, $labelFormat);
-	$item = Null;
+	$item = NULL;
 	if ($form) {
 		$item = $this->doc->createElement('li');
 		$item->appendChild($form);
@@ -1132,7 +1132,7 @@ private function dataConversionForm ($locations, $exportFormat, $labelFormat) {
 	$recordXML = $this->XMLForLocations($locations);
 	$XMLString = $recordXML->saveXML();
 
-	$form = Null;
+	$form = NULL;
 	if ($XMLString) {
 		$form = $this->doc->createElement('form');
 		$form->setAttribute('method', 'POST');
@@ -1220,11 +1220,11 @@ private function XMLForLocations ($locations) {
  * @return DOMElement
  */
 private function KVKItem ($result) {
-	$KVKItem = Null;
+	$KVKItem = NULL;
 
 	// Check whether there are ISBNs and use the first one we find.
 	// (KVK does not seem to support searches for multiple ISBNs.)
-	$ISBN = Null;
+	$ISBN = NULL;
 	foreach ($result['location'] as $locationAll) {
 		if (array_key_exists('md-isbn', $locationAll['ch'])) {
 			$ISBN = $locationAll['ch']['md-isbn'][0]['values'][0];
@@ -1243,10 +1243,10 @@ private function KVKItem ($result) {
 	else {
 		// If there is no ISBN only proceed when we are dealing with a book
 		// and create a search for the title and author.
-		$wantKVKLink = False;
+		$wantKVKLink = FALSE;
 		foreach ($result['md-medium'] as $medium) {
 			if ($medium['values'][0] === 'book') {
-				$wantKVKLink = True;
+				$wantKVKLink = TRUE;
 				break;
 			}
 		}
@@ -1310,13 +1310,13 @@ private function pz2ValuesUnique ($array) {
  */
 private function DOMElementForTitle ($title, $result) {
 	$elements = Array();
-	$theData = Null;
+	$theData = NULL;
 
 	if ($result['md-' . $title]) {
 		$theData = $this->pz2ValuesUnique($result['md-' . $title]);
 		foreach ($theData as $value) {
 			$rawDatum = $value;
-			$wrappedDatum = Null;
+			$wrappedDatum = NULL;
 			switch ($title) {
 				case 'doi':
 					$wrappedDatum = $this->linkForDOI($rawDatum);

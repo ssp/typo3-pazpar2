@@ -98,7 +98,7 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 	 * @return array
 	 */
 	public function getSubjects () {
-		if ($this->subjects == Null) {
+		if ($this->subjects == NULL) {
 			$this->setupSubjects();
 		}
 
@@ -117,7 +117,7 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 	 * @return int
 	 */
 	public function getMonthCount () {
-		if ($this->monthCount === Null) {
+		if ($this->monthCount === NULL) {
 			return 13;
 		}
 
@@ -153,9 +153,9 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 	 *					* queries => Array [required]
 	 *						* string that is a CCL query
 	 *					* inline => boolean - displayed in one line with other items?
-	 *						[optional, defaults to false]
+	 *						[optional, defaults to FALSE]
 	 *					* break => boolean - insert <br> before current element?
-	 *						[optional, should only be used with inline => true, defaults to false]
+	 *						[optional, should only be used with inline => TRUE, defaults to FALSE]
 	 *
 	 * If the »queries« field of a subject group is not specified, create it by
 	 *	taking the union of the »queries« arrays of all its »subjects«.
@@ -210,7 +210,7 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 			// Add tag fields to subject (inline and break).
 			foreach (explode(',', $nodeRecord['tags']) as $tag) {
 				if ($tag != '') {
-					$subject[$tag] = True;
+					$subject[$tag] = TRUE;
 				}
 			}
 
@@ -281,7 +281,7 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 
 						$subjectIndex = intval(array_shift($nameParts));
 						$subject =& $mySubjects[$subjectIndex];
-						$subject['selected'] = True;
+						$subject['selected'] = TRUE;
 						$selectedCheckboxes[] = implode(',', $subject['queries']);
 					}
 				}
@@ -302,13 +302,13 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 			foreach ($subjects as &$group) {
 				$queriesString = implode(',', $group['queries']);
 				if (in_array($queriesString, $queryItems)) {
-					$group['selected'] = True;
+					$group['selected'] = TRUE;
 				}
 				else {
 					foreach ($group['subjects'] as &$subject) {
 						$queriesString = implode(',', $subject['queries']);
 						if (in_array($queriesString, $queryItems)) {
-							$subject['selected'] = True;
+							$subject['selected'] = TRUE;
 						}
 					}
 				}
@@ -317,7 +317,7 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 
 		// Turn on the checkbox if there only is a single one.
 		if (count($subjects) === 1 && count($subjects[0]['subjects'] === 1)) {
-			$subjects[0]['subjects'][0]['selected'] = True;
+			$subjects[0]['subjects'][0]['selected'] = TRUE;
 		}
 
 		// Turn on the selection for the group if all containing subjects are selected.
@@ -336,15 +336,15 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 
 
 	/**
-	 * Takes the passed $group array and sets its »selected« field to True if the »selected« fields
-	 * of all the objects in its »subjects« array are set to True. Uses recursion to check
+	 * Takes the passed $group array and sets its »selected« field to TRUE if the »selected« fields
+	 * of all the objects in its »subjects« array are set to TRUE. Uses recursion to check
 	 * potentially existant nested groups.
 	 *
 	 * @param array $group (passed by reference)
 	 * @return void
 	 */
 	private function turnOnGroupSelectionIfNeeded (&$group) {
-		$isSelected = True;
+		$isSelected = TRUE;
 		foreach ($group['subjects'] as &$subject) {
 			if ($subject['subjects']) {
 				$this->turnOnGroupSelectionIfNeeded($subject);
@@ -353,24 +353,24 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 		}
 
 		if ($isSelected) {
-			$group['selected'] = True;
+			$group['selected'] = TRUE;
 		}
 	}
 
 
 
 	/**
-	 * Checks whether the »selected« field of the passed $group array is true and recursively sets
-	 * the »selected« fields of all contained subjects in the »subject« element to True if that is
+	 * Checks whether the »selected« field of the passed $group array is TRUE and recursively sets
+	 * the »selected« fields of all contained subjects in the »subject« element to TRUE if that is
 	 * the case.
 	 *
 	 * @param array $group (passed by reference)
 	 * @return void
 	 */
 	private function turnOnChildSelectionIfNeeded (&$group) {
-		if ($group['selected'] == True) {
+		if ($group['selected'] == TRUE) {
 			foreach ($group['subjects'] as &$subject) {
-				$subject['selected'] = True;
+				$subject['selected'] = TRUE;
 				if ($subject['subjects']) {
 					$this->turnOnChildSelectionIfNeeded($subject);
 				}
@@ -395,7 +395,7 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 	 * @return Array
 	 */
 	public function getMonths () {
-		if ($this->months == Null) {
+		if ($this->months == NULL) {
 			$this->months = $this->monthsArray();
 		}
 		return $this->months;
@@ -482,10 +482,10 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 	 * Value of the selected item in the month selection menu:
 	 * The key of the second item in the $months array.
 	 *
-	 * @return string|null value of default month or null
+	 * @return string|NULL value of default month or NULL
 	 */
 	public function getDefaultMonth () {
-		$result = null;
+		$result = NULL;
 
 		$keys = array_keys($this->getMonths());
 		if ( count($keys) >= 2 ) {
@@ -526,15 +526,15 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 	 * Builds a query string using the queries of the selected checkboxes in the form.
 	 * The strings used for equals assignment and wildcard can be configured
 	 *  to yield string that can be used for both Pica- and CCL-style queries.
-	 * Null is returned when no search queries are selected.
+	 * NULL is returned when no search queries are selected.
 	 *
 	 * @param string $equals [defaults to '=']
 	 * @param string $wildcard [defaults to '']
-	 * @param bollean $ignoreSelectedDate [defaults to False]
+	 * @param bollean $ignoreSelectedDate [defaults to FALSE]
 	 * @return string
 	 */
-	public function searchQueryWithEqualsAndWildcard ($equals = '=', $wildcard = '', $ignoreSelectedDate = False) {
-		$queryString = Null;
+	public function searchQueryWithEqualsAndWildcard ($equals = '=', $wildcard = '', $ignoreSelectedDate = FALSE) {
+		$queryString = NULL;
 
 		$queries = $this->selectedQueriesInFormWithWildcard($wildcard);
 		if (count($queries) > 0) {
@@ -559,9 +559,9 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 	 * @return string
 	 */
 	public function getAtomURL () {
-		$atomURL = Null;
+		$atomURL = NULL;
 
-		$searchQuery = $this->searchQueryWithEqualsAndWildcard(' ', '*', True);
+		$searchQuery = $this->searchQueryWithEqualsAndWildcard(' ', '*', TRUE);
 		if ($searchQuery) {
 			$searchQuery = urlencode($searchQuery);
 
