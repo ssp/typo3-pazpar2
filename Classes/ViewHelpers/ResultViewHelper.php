@@ -743,7 +743,8 @@ private function cleanURLList ($location, $result) {
 			$URL = $URLInfo['values'][0];
 
 			// Check for duplicates in the electronic-urls field.
-			for ($remainingURLIndex = $URLIndex + 1; $remainingURLIndex < count($URLs); $remainingURLIndex++) {
+			$URLCount = count($URLs);
+			for ($remainingURLIndex = $URLIndex + 1; $remainingURLIndex < $URLCount; $remainingURLIndex++) {
 				$remainingURLInfo = $URLs[$remainingURLIndex];
 				$remainingURL = $remainingURLInfo['values'][0];
 				if ($URL == $remainingURL) {

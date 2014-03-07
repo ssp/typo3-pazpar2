@@ -416,7 +416,8 @@ class Tx_Pazpar2_Domain_Model_Pazpar2neuerwerbungen extends Tx_Extbase_DomainObj
 		$year = date('Y');
 		$month = date('n');
 
-		for ($i = 1; $i <= $this->getMonthCount(); $i++) {
+		$monthCount = $this->getMonthCount();
+		for ($i = 1; $i <= $monthCount; $i++) {
 			$searchString = $this->picaSearchStringForMonth($month, $year);
 
 			/* make sure the text encoding in the locale_all setting matches the encoding
