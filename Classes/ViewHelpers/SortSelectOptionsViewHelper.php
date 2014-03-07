@@ -54,7 +54,7 @@ class Tx_Pazpar2_ViewHelpers_SortSelectOptionsViewHelper extends Tx_Fluid_Core_V
 			}
 			$pz2SortString = implode(',', $pz2SortComponents);
 
-			$localisedLabel = Tx_Extbase_Utility_Localization::translate('sort-' . $sortConfiguration['id'] , 'Pazpar2');
+			$localisedLabel = Tx_Extbase_Utility_Localization::translate('sort-' . $sortConfiguration['id'], 'Pazpar2');
 
 			$selectOptions[$pz2SortString] = $localisedLabel;
 		}

@@ -120,7 +120,7 @@ public function render () {
 		if ($authors) {
 			$spaceBefore = ', ';
 		}
-		$this->appendMarkupForFieldToContainer('date', $result,  $li, $spaceBefore, '.');
+		$this->appendMarkupForFieldToContainer('date', $result, $li, $spaceBefore, '.');
 	}
 
 	if ($this->conf['provideCOinSExport'] == 1) {
@@ -551,7 +551,6 @@ private function detailLine ($title, $informationElements) {
 
 		$infoItems = $this->markupInfoItems($informationElements);
 
-
 		if ($infoItems) {
 			$line = Array();
 
@@ -966,7 +965,7 @@ private function keywordsDetailLine ($result) {
 				$parameters['queryString'] = 'subject="' . $keyword . '"';
 			}
 
-			$linkURI = $URIBuilder->uriFor('index', $parameters , 'Pazpar2', 'Pazpar2');
+			$linkURI = $URIBuilder->uriFor('index', $parameters, 'Pazpar2', 'Pazpar2');
 			$linkElement->setAttribute('href', $linkURI);
 			$titleString = Tx_Extbase_Utility_Localization::translate('nach Schlagwort "#" suchen', 'Pazpar2');
 			$titleString = str_replace('#', $keyword, $titleString);
