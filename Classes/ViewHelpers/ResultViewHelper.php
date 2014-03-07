@@ -289,7 +289,7 @@ private function journalInfo ($result) {
 	$outputElement = $this->doc->createElement('span');
 	$outputElement->setAttribute('class', 'pz2-journal');
 
-	$journalTitle = $this->appendMarkupForFieldToContainer('journal-title', $result, $outputElement, ' – ' . Tx_Extbase_Utility_Localization::translate("In", "Pazpar2") . ": ");
+	$journalTitle = $this->appendMarkupForFieldToContainer('journal-title', $result, $outputElement, ' – ' . Tx_Extbase_Utility_Localization::translate('In', 'Pazpar2') . ': ');
 	if ($journalTitle) {
 		$this->appendMarkupForFieldToContainer('journal-subpart', $result, $journalTitle, ', ');
 		$journalTitle->appendChild($this->doc->createTextNode('.'));
@@ -557,7 +557,7 @@ private function detailLine ($title, $informationElements) {
 
 			$rowTitle = $this->doc->createElement('dt');
 			$line[] = $rowTitle;
-			$labelNode = $this->doc->createTextNode($headingText . ":");
+			$labelNode = $this->doc->createTextNode($headingText . ':');
 			$acronym = Tx_Extbase_Utility_Localization::translate('detail-label-acronym-' . $title, 'Pazpar2');
 			if ($acronym) {
 				$acronymElement = $this->doc->createElement('abbr');
@@ -777,7 +777,7 @@ private function cleanURLList ($location, $result) {
 		$URLs = array_filter($URLs);
 
 		// Re-order URLs so those with explicit labels appear at the beginning.
-		usort($URLs, Array($this, "URLSort"));
+		usort($URLs, Array($this, 'URLSort'));
 	}
 	
 	return $URLs;

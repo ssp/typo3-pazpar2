@@ -694,7 +694,7 @@ class Tx_Pazpar2_Domain_Model_Query extends Tx_Extbase_DomainObject_AbstractEnti
 							}
 
 							// Sort the location array to have the newest item first
-							usort($myHit['location'], Array($this, "yearSort"));
+							usort($myHit['location'], Array($this, 'yearSort'));
 
 							$this->results[$key] = $myHit;
 						}

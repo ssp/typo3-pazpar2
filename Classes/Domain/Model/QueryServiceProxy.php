@@ -119,7 +119,7 @@ class Tx_Pazpar2_Domain_Model_QueryServiceProxy extends Tx_Pazpar2_Domain_Model_
 				foreach ($headers as $header) {
 					if (strpos($header, $setCookieString) === 0) {
 						$cookieString = substr($header, strlen($setCookieString));
-						$cookieStringParts = explode(";", $cookieString);
+						$cookieStringParts = explode(';', $cookieString);
 						$this->cookie = $cookieStringParts[0];
 						break;
 					}
